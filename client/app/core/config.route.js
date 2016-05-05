@@ -13,7 +13,7 @@
                 'chart/echarts', 'chart/echarts-line', 'chart/echarts-bar', 'chart/echarts-pie', 'chart/echarts-scatter', 'chart/echarts-more',
                 'page/404', 'page/500', 'page/blank', 'page/forgot-password', 'page/invoice', 'page/lock-screen', 'page/profile', 'page/signin', 'page/signup',
                 'app/calendar'
-            ]
+            ];
 
             setRoutes = function(route) {
                 var config, url;
@@ -40,7 +40,27 @@
                 templateUrl: 'app/dashboard/dashboard.html'
             });
 
+            $stateProvider.state('users', {
+                url: '/users',
+                templateUrl: 'app/users/users.html',
+                controller: 'UsersCtrl',
+                controllerAs: 'users'
+            });
+
+            $stateProvider.state('tenders', {
+                url: '/tenders',
+                templateUrl: 'app/tenders/tenders.html',
+                controller: 'TendersCtrl',
+                controllerAs: 'tenders'
+            });
+            $stateProvider.state('tender', {
+                url: '/tenders/:tender',
+                templateUrl: 'app/tenders/tender.stats.html',
+                controller: 'TenderStatsCtrl',
+                controllerAs: 'tender'
+            });
+
         }]
     );
 
-})(); 
+})();

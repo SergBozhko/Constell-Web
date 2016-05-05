@@ -1,0 +1,137 @@
+<!--Users page-->
+<div class="page page-table">
+
+    <div class="row ui-section">
+        <div class="col-lg-8 clearfix">
+            <h2 class="section-header">Список тендеров</h2>
+        </div>
+        <div class="col-md-12">
+            <section class="panel panel-default table-dynamic">
+
+                <div class="constell-graph-area">
+                    <div class="panel-heading">Traffic</div>
+                    <div data-echarts data-options="tenders.combo.options" style="height: 360px;"></div>
+                </div>
+
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-4 col-xs-6">
+                            <form>
+                                <input type="text"
+                                       placeholder="Search..."
+                                       class="form-control"
+                                       data-ng-model="searchKeywords"
+                                       data-ng-keyup="search()">
+                            </form>
+                        </div>
+                        <div class="col-sm-3 col-xs-6 filter-result-info">
+                <span>
+                Showing {{filteredStores.length}}/{{stores.length}} entries
+                </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    ID
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Название
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Категория
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Предложение
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Начало
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Завершение
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Кол-во
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Валюта
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Ед. изм.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Открытый
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="tender in tenders.list.Result">
+                            <td>{{tender.id}}</td>
+                            <td class="left-align">{{tender.title}}</td>
+                            <td>{{tender.category}}</td>
+                            <td>{{tender.minPrice}}</td>
+                            <td>{{tender.startTime}}</td>
+                            <td>{{tender.endTime}}</td>
+                            <td>{{tender.amount}}</td>
+                            <td>{{tender.currency}}</td>
+                            <td>{{tender.unit}}</td>
+                            <td><md-checkbox ng-model="tender.isOpenTender" data-ng-disabled="true"> {{ checkbox.cb1 }} </md-checkbox></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                <span>
+                Show
+                <select data-ng-model="numPerPage"
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNumPerPageChange()">
+                </select>
+                entries per page
+                </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <uib-pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="tenders.list.TotalItemsCount"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="10"
+                                            rotate="false"
+                                            previous-text="Назад" next-text="Далее"
+                                            boundary-links="false"></uib-pagination>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,33 @@
+// Constell styles
+.table-wrapper {
+    overflow-x: auto;
+    margin: 0 8px;
+
+    // Table styles
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: rgba(66, 139, 202, 0.1);
+    }
+    .table tbody tr td {
+        text-align: center;
+        vertical-align: middle;
+    }
+    .table tbody tr td.left-align {
+        text-align: left !important;
+    }
+    .table > thead > tr > th {
+        text-align: center;
+        vertical-align: middle;
+    }
+    .table thead th > .th {
+        padding: 15px !important;
+    }
+    .table md-checkbox {
+        margin-bottom: 0;
+        margin-right: -10px;
+    }
+    .table md-checkbox.md-default-theme[disabled].md-checked .md-icon,
+    md-checkbox[disabled].md-checked .md-icon {
+        background-color: rgba(0,188,212,0.87);
+    }
+
+}

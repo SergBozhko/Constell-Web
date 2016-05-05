@@ -36,6 +36,7 @@
         };
         var color = {
             primary:    '#009688',
+            //primary:    '#009688',
             success:    '#8BC34A',
             info:       '#00BCD4',
             infoAlt:    '#7E57C2',
@@ -60,7 +61,7 @@
         var lightGreenAlt = $mdThemingProvider.extendPalette('light-green', {
             'contrastLightColors': '500 600 700 800 900',
             'contrastStrongLightColors': '500 600 700 800 900'
-        })        
+        })
 
         $mdThemingProvider
             .definePalette('cyanAlt', cyanAlt)

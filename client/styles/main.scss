@@ -1,6 +1,6 @@
 
 // Shared variables and mixins
-@import 
+@import
     "global/var"                        // global variables
 ,   "global/var-extra"                  // extra global variables
 ,   "bootstrap/bootstrap/mixins"        // Bootstrap mixins
@@ -8,9 +8,9 @@
 ;
 
 
-@import 
+@import
     "global/shared"
-    
+
 // Plugins, overrides plugins' style
 ,   "plugins/angular-bootstrap"
 ,   "plugins/angular-material"
@@ -40,4 +40,5 @@
 ,   "layout/nav-color"
 ,   "layout/header"
 ,   "layout/body"
+,   'constell/constell'
 ;
