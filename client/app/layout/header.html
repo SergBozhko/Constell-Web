@@ -10,9 +10,8 @@
                      'bg-info': ['14','24','34'].indexOf(main.skin) >= 0,
                      'bg-warning': ['15','25','35'].indexOf(main.skin) >= 0,
                      'bg-danger': ['16','26','36'].indexOf(main.skin) >= 0 }">
-        <a href="#/">
-            <span class="logo-icon zmdi zmdi-view-dashboard"></span>
-            <span class="logo-text">{{main.brand}}</span>
+        <a href="#/" class="main-logo-link">
+            <img src="images/constell-logo.png" alt="">
         </a>
     </div>
 
@@ -47,7 +46,7 @@
                             <md-radio-group class="ui-md-radio-group-inline" ng-model="main.menu">
                                 <md-radio-button value="vertical">Vertical</md-radio-button>
                                 <md-radio-button value="horizontal">Horizontal</md-radio-button>
-                            </md-radio-group>    
+                            </md-radio-group>
                         </li>
                         <li class="list-group-item">
                             <p>Additional</p>
@@ -58,7 +57,7 @@
                         </li>
                         <li class="list-group-item">
                             <p>
-                                <span>Page Transition: </span> 
+                                <span>Page Transition: </span>
                                 <span class="space"></span>
                                 <select ng-model="main.pageTransition"
                                         ng-options="ageTransitionOpt.name for ageTransitionOpt in pageTransitionOpts"></select>
@@ -90,7 +89,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-primary item-header"></span>
                                         <span class="bg-white item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -99,7 +98,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-success item-header"></span>
                                         <span class="bg-white item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -108,7 +107,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-info item-header"></span>
                                         <span class="bg-white item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -117,7 +116,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-warning item-header"></span>
                                         <span class="bg-white item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -126,7 +125,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-danger item-header"></span>
                                         <span class="bg-white item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                             </div>
@@ -137,7 +136,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-white item-header"></span>
                                         <span class="bg-white item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -146,7 +145,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-primary item-header"></span>
                                         <span class="bg-primary item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -155,7 +154,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-success item-header"></span>
                                         <span class="bg-success item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -164,7 +163,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-info item-header"></span>
                                         <span class="bg-info item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -173,7 +172,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-warning item-header"></span>
                                         <span class="bg-warning item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -182,9 +181,9 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-danger item-header"></span>
                                         <span class="bg-danger item-header"></span>
-                                        <span class="bg-dark"></span> 
+                                        <span class="bg-dark"></span>
                                     </span>
-                                </label>                                 
+                                </label>
                             </div>
                             <div class="col-xs-4">
                                 <label class="skin-check">
@@ -193,16 +192,16 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-dark item-header"></span>
                                         <span class="bg-dark item-header"></span>
-                                        <span class="bg-white"></span> 
+                                        <span class="bg-white"></span>
                                     </span>
-                                </label> 
+                                </label>
                                 <label class="skin-check">
                                     <input type="radio" name="skin" value="32" ng-model="main.skin">
                                     <span class="skin-item bg-body">
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-primary item-header"></span>
                                         <span class="bg-primary item-header"></span>
-                                        <span class="bg-white"></span> 
+                                        <span class="bg-white"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -211,7 +210,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-success item-header"></span>
                                         <span class="bg-success item-header"></span>
-                                        <span class="bg-white"></span> 
+                                        <span class="bg-white"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -220,7 +219,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-info item-header"></span>
                                         <span class="bg-info item-header"></span>
-                                        <span class="bg-white"></span> 
+                                        <span class="bg-white"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -229,7 +228,7 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-warning item-header"></span>
                                         <span class="bg-warning item-header"></span>
-                                        <span class="bg-white"></span> 
+                                        <span class="bg-white"></span>
                                     </span>
                                 </label>
                                 <label class="skin-check">
@@ -238,9 +237,9 @@
                                         <span class="overlay"><span class="fa fa-check"></span></span>
                                         <span class="bg-danger item-header"></span>
                                         <span class="bg-danger item-header"></span>
-                                        <span class="bg-white"></span> 
+                                        <span class="bg-white"></span>
                                     </span>
-                                </label>                                 
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -294,14 +293,14 @@
                                     <span class="text-muted">9 hours ago</span>
                                 </div>
                             </a>
-                        </li>                         
+                        </li>
                     </ul>
                     <div class="panel-footer">
                         <a href="#/mail/inbox">Show all mails.</a>
                     </div>
                 </div>
             </li>
-        </ul> 
+        </ul>
 
         <ul class="nav-right pull-right list-unstyled">
 

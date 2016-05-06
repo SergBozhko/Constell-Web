@@ -1,7 +1,7 @@
 /**
  * Created by admin on 05.05.16.
  */
-(function() {
+(function () {
 
     'use strict';
 
@@ -16,7 +16,7 @@
 
         self.list = rest.get({customUrl: 'Tender/GetTenders'});
 
-        self.list.$promise.then(function(response) {
+        self.list.$promise.then(function (response) {
             console.log(response);
         });
 
@@ -27,7 +27,7 @@
 
         var xAxisData = [];
 
-        self.graph.$promise.then(function(response) {
+        self.graph.$promise.then(function (response) {
             self.combo = {};
             self.combo.options = {
                 legend: {
@@ -56,7 +56,7 @@
                 },
                 xAxis: [
                     {
-                        type : 'category',
+                        type: 'category',
                         axisLine: {
                             show: false
                         },
@@ -79,7 +79,7 @@
                 ],
                 yAxis: [
                     {
-                        type : 'value',
+                        type: 'value',
                         axisLine: {
                             show: false
                         },
@@ -101,8 +101,8 @@
                 ],
                 series: [
                     {
-                        name:'Предложения',
-                        type:'line',
+                        name: 'Предложения',
+                        type: 'line',
                         clickable: false,
                         itemStyle: {
                             normal: {
@@ -120,10 +120,10 @@
                 ]
             };
 
-           response.result.forEach(function(element) {
-               self.combo.options.xAxis[0].data.push(element.dayStr);
-               self.combo.options.series[0].data.push(element.countOffers);
-           });
+            response.result.forEach(function (element) {
+                self.combo.options.xAxis[0].data.push(element.dayStr);
+                self.combo.options.series[0].data.push(element.countOffers);
+            });
         });
 
     }
@@ -133,10 +133,114 @@
 
         var self = this;
 
-        self.tender = rest.get({customUrl: 'Tender/GetTender/', id: $stateParams.tender});
+        self.info = rest.get({customUrl: 'Tender/GetTender/', id: $stateParams.tender});
 
-        self.tender.$promise.then(function(response) {
+        self.stats = rest.get({customUrl: 'Tender/GetDataOfGraphForTender', tenderId: $stateParams.tender});
+
+        self.stats.$promise.then(function (response) {
             console.log(response);
+
+            self.combo = {};
+            self.combo.options = {
+                //title : {
+                //    text: 'Height and weight distribution',
+                //    subtext: 'Data: Heinz  2003'
+                //},
+                tooltip: {
+                    trigger: 'axis',
+                    showDelay: 0,
+                    axisPointer: {
+                        show: true,
+                        type: 'cross',
+                        lineStyle: {
+                            type: 'dashed',
+                            width: 1
+                        }
+                    },
+                    formatter: function (params) {
+
+                        var date = new Date(params.value[0]);
+
+                        return 'Имя: ' + params.value[3] + '<br>'
+                            + 'Цена: ' + params.value[2] + ' руб<br>'
+                            + 'Дата: ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                    }
+                },
+                legend: {
+                    data: ['Постоянные', 'Новые']
+                },
+                toolbox: {
+                    show: false
+                },
+                xAxis: [
+                    {
+                        type: 'value',
+                        scale: true,
+                        axisLabel: {
+                            formatter: function (value, index) {
+                                var date = new Date(value);
+
+                                return date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                            }
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        scale: true,
+                        axisLabel: {
+                            formatter: '{value} руб'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: 'Постоянные',
+                        type: 'scatter',
+                        data: response.certified,
+                        symbolSize: 8,
+                        markPoint: {
+                            data: [
+                                //{type : 'max', name: 'Max'},
+                                {type: 'min', name: 'Min'}
+                            ]
+                        },
+                        markLine: {
+                            data: [
+                                //{type : 'average', name: 'Average'}
+                            ]
+                        }
+                    },
+                    {
+                        name: 'Новые',
+                        type: 'scatter',
+                        data: response.simple,
+                        symbolSize: 8,
+                        markPoint: {
+                            data: [
+                                //{type: 'max', name: 'Max'},
+                                {type: 'min', name: 'Min'}
+                            ]
+                        },
+                        markLine: {
+                            data: [
+                                //{type: 'average', name: 'Average'}
+                            ]
+                        }
+                    }
+                ]
+            };
+
+            self.stats.$promise.then(function(response) {
+                response.certified.forEach(function(element) {
+                    element[0] = new Date(element[0]);
+                });
+                response.simple.forEach(function(element) {
+                    element[0] = new Date(element[0]);
+                });
+            });
+
         });
 
     }
