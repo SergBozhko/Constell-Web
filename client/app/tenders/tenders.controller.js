@@ -134,8 +134,8 @@
         var self = this;
 
         self.info = rest.get({customUrl: 'Tender/GetTender/', id: $stateParams.tender});
-        console.log(self.info);
 
+        // Tender stats
         self.stats = rest.get({customUrl: 'Tender/GetDataOfGraphForTender', tenderId: $stateParams.tender});
 
         self.stats.$promise.then(function (response) {

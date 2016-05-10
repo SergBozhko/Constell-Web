@@ -17,12 +17,13 @@
 
 .constell-block-title {
     padding: 15px;
-    background-color: #F5F5F5;
+    background-color: $bgTitle;
     color: #428bca;
     text-transform: uppercase;
     font-weight: 700;
     margin: 25px 8px;
     overflow: hidden;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 .constell-block-title.mt-mini {
     margin-top: 15px;
@@ -76,6 +77,19 @@
     .table md-checkbox.md-default-theme[disabled].md-checked .md-icon,
     md-checkbox[disabled].md-checked .md-icon {
         background-color: rgba(0,188,212,0.87);
+    }
+
+}
+
+.constell-table-filters {
+
+    .filter-result-info {
+        float: right;
+        padding: 0 15px;
+    }
+
+    .btn-filter-action {
+        float: right;
     }
 
 }

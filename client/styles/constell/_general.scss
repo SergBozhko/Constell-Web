@@ -1,0 +1,8 @@
+// Constell generals
+.constell-block {
+    margin-bottom: $mb;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}

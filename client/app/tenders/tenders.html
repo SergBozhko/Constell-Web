@@ -2,18 +2,25 @@
 <div class="page page-table">
 
     <div class="row ui-section">
+
         <div class="col-lg-8 clearfix">
             <h2 class="section-header">Список тендеров</h2>
         </div>
         <div class="col-md-12">
             <section class="panel panel-default table-dynamic">
 
-                <div class="constell-graph-area">
-                    <div class="panel-heading">Traffic</div>
-                    <div data-echarts data-options="tenders.combo.options" style="height: 360px;"></div>
-                </div>
+                <!--Tenders Stats-->
+                <section class="constell-block">
+                    <div class="constell-graph-area">
+                        <div class="constell-block-title mt-mini">Статистика</div>
+                        <div data-echarts data-options="tenders.combo.options" style="height: 360px;"></div>
+                    </div>
+                </section>
 
-                <div class="table-filters">
+
+                <div class="constell-block-title mt-mini">Тендеры</div>
+
+                <div class="table-filters constell-table-filters">
                     <div class="row">
                         <div class="col-sm-4 col-xs-6">
                             <form>
@@ -24,10 +31,8 @@
                                        data-ng-keyup="search()">
                             </form>
                         </div>
-                        <div class="col-sm-3 col-xs-6 filter-result-info">
-                <span>
-                Showing {{filteredStores.length}}/{{stores.length}} entries
-                </span>
+                        <div class="col-sm-8 col-xs-6 filter-result-info">
+                            <div class="btn btn-primary btn-filter-action"><i class="zmdi zmdi-plus"></i>Добавить</div>
                         </div>
                     </div>
                 </div>
@@ -99,7 +104,11 @@
                             <td>{{tender.amount}}</td>
                             <td>{{tender.currency}}</td>
                             <td>{{tender.unit}}</td>
-                            <td><md-checkbox ng-model="tender.isOpenTender" data-ng-disabled="true"> {{ checkbox.cb1 }} </md-checkbox></td>
+                            <td>
+                                <md-checkbox ng-model="tender.isOpenTender" data-ng-disabled="true"> {{ checkbox.cb1
+                                    }}
+                                </md-checkbox>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
