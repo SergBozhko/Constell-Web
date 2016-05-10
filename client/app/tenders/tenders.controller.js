@@ -134,6 +134,7 @@
         var self = this;
 
         self.info = rest.get({customUrl: 'Tender/GetTender/', id: $stateParams.tender});
+        console.log(self.info);
 
         self.stats = rest.get({customUrl: 'Tender/GetDataOfGraphForTender', tenderId: $stateParams.tender});
 
@@ -142,10 +143,6 @@
 
             self.combo = {};
             self.combo.options = {
-                //title : {
-                //    text: 'Height and weight distribution',
-                //    subtext: 'Data: Heinz  2003'
-                //},
                 tooltip: {
                     trigger: 'axis',
                     showDelay: 0,

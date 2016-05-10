@@ -3,6 +3,7 @@ var args = require('yargs').argv;
 var browserSync = require('browser-sync');
 var config = require('./gulp.config')();
 var del = require('del');
+var babel = require('gulp-babel');
 var $ = require('gulp-load-plugins')({lazy: true});
 
 gulp.task('help', $.taskListing);
@@ -93,7 +94,7 @@ gulp.task('sass-min', function() {
         .src(config.sass)
         .pipe($.plumber({errorHandler: swallowError}))
         .pipe($.sass(sassOptions))
-        .pipe(gulp.dest(config.tmp + '/styles'));    
+        .pipe(gulp.dest(config.tmp + '/styles'));
 })
 
 gulp.task('sass-watcher', function() {
@@ -115,6 +116,22 @@ gulp.task('copy', function() {
     return gulp
         .src(config.assets, {base: config.client})
         .pipe(gulp.dest(config.dist + '/'));
+});
+
+gulp.task('js', function () {
+    gulp.src('./src/app.js')
+        .pipe(browserify({
+            debug : true
+        }))
+        .on('error', function(err){
+            console.log(err.message);
+            this.end();
+        })
+        .pipe(babel({
+                'presets': ['es2015']
+            })
+        )
+        .pipe(gulp.dest('./build/js'))
 });
 
 gulp.task('optimize', ['inject', 'sass-min'], function() {

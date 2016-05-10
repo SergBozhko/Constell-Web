@@ -9,9 +9,37 @@
             <section class="panel panel-default table-dynamic">
 
                 <div class="constell-graph-area">
-                    <div class="panel-heading">Статистика</div>
+                    <div class="constell-block-title mt-mini">Статистика</div>
                     <div data-echarts data-options="tender.combo.options" style="height: 360px;"></div>
                 </div>
+
+                <div class="col-md-12">
+                    <div class="panel panel-default panel-labeled constell-panel-list">
+                        <div class="panel-body">
+                            <span class="panel-label">Информация</span>
+                            <ul class="list-group no-margin">
+                                <li class="list-group-item">{{tender.info.title}}</li>
+                                <li class="list-group-item"><b>Категория: </b>{{tender.info.category}}</li>
+                                <li class="list-group-item">
+                                    <b>Минимальное предложение: </b>
+                                    <span ng-if="tender.info.minPrice == null">отсутствует</span>
+                                    <span ng-if="tender.info.minPrice != null">{{tender.info.minPrice}} руб.</span>
+
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Статус тендера: </b>
+                                    <span ng-if="tender.info.isOpenTender">открыт</span>
+                                    <span ng-if="!tender.info.isOpenTender">закрыт</span>
+                                </li>
+                                <li class="list-group-item" ng-if="tender.info.isOpenTender">
+                                    <b>Дата начала: </b> {{tender.info.startTime}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="constell-block-title">Предложения</div>
 
                 <div class="table-filters">
                     <div class="row">
@@ -43,63 +71,39 @@
                             </th>
                             <th>
                                 <div class="th">
-                                    Название
+                                    Имя
                                 </div>
                             </th>
                             <th>
                                 <div class="th">
-                                    Категория
+                                    Цена (руб)
                                 </div>
                             </th>
                             <th>
                                 <div class="th">
-                                    Предложение
+                                    Дата
                                 </div>
                             </th>
                             <th>
                                 <div class="th">
-                                    Начало
+                                    Комментарии
                                 </div>
                             </th>
                             <th>
                                 <div class="th">
-                                    Завершение
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
-                                    Кол-во
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
-                                    Валюта
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
-                                    Ед. изм.
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
-                                    Открытый
+                                    Проверенный
                                 </div>
                             </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr data-ng-repeat="tender in tenders.list.Result">
-                            <td>{{tender.id}}</td>
-                            <td class="left-align">{{tender.title}}</td>
-                            <td>{{tender.category}}</td>
-                            <td>{{tender.minPrice}}</td>
-                            <td>{{tender.startTime}}</td>
-                            <td>{{tender.endTime}}</td>
-                            <td>{{tender.amount}}</td>
-                            <td>{{tender.currency}}</td>
-                            <td>{{tender.unit}}</td>
-                            <td><md-checkbox ng-model="tender.isOpenTender" data-ng-disabled="true"> {{ checkbox.cb1 }} </md-checkbox></td>
+                        <tr data-ng-repeat="tender in tender.info.offers">
+                            <td>{{tender.userId}}</td>
+                            <td>{{tender.userName}}</td>
+                            <td>{{tender.price}}</td>
+                            <td>{{tender.dateStr}}</td>
+                            <td>{{tender.comments}}</td>
+                            <td><md-checkbox ng-model="tender.isCertified" data-ng-disabled="true"> {{ checkbox.cb1 }} </md-checkbox></td>
                         </tr>
                         </tbody>
                     </table>
