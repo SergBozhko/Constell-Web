@@ -1,4 +1,4 @@
-<!--Users page-->
+<!--Tenders page-->
 <div class="page page-table">
 
     <div class="row ui-section">
@@ -32,7 +32,7 @@
                             </form>
                         </div>
                         <div class="col-sm-8 col-xs-6 filter-result-info">
-                            <div class="btn btn-primary btn-filter-action"><i class="zmdi zmdi-plus"></i>Добавить</div>
+                            <a ui-sref="tenderAdd" class="btn btn-primary btn-filter-action"><i class="zmdi zmdi-plus"></i>Добавить</a>
                         </div>
                     </div>
                 </div>
@@ -58,11 +58,6 @@
                             </th>
                             <th>
                                 <div class="th">
-                                    Предложение
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
                                     Начало
                                 </div>
                             </th>
@@ -73,17 +68,7 @@
                             </th>
                             <th>
                                 <div class="th">
-                                    Кол-во
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
-                                    Валюта
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
-                                    Ед. изм.
+                                    Объем
                                 </div>
                             </th>
                             <th>
@@ -98,12 +83,14 @@
                             <td>{{tender.id}}</td>
                             <td class="left-align text-link"><a href="#/tenders/{{tender.id}}">{{tender.title}}</a></td>
                             <td>{{tender.category}}</td>
-                            <td>{{tender.minPrice}}</td>
+                            <!--<td>{{tender.minPrice}}</td>-->
                             <td>{{tender.startTime}}</td>
                             <td>{{tender.endTime}}</td>
-                            <td>{{tender.amount}}</td>
-                            <td>{{tender.currency}}</td>
-                            <td>{{tender.unit}}</td>
+                            <td>
+                                <span ng-if="tender.amount != null">{{tender.amount}}</span>
+                                <span ng-if="tender.amount == null">0</span>
+                                {{tender.unit}}
+                            </td>
                             <td>
                                 <md-checkbox ng-model="tender.isOpenTender" data-ng-disabled="true"> {{ checkbox.cb1
                                     }}
@@ -128,10 +115,10 @@
                         </div>
                         <div class="col-md-6 text-right pagination-container">
                             <uib-pagination class="pagination-sm"
-                                            ng-model="currentPage"
+                                            ng-model="tenders.list.Result"
                                             total-items="tenders.list.TotalItemsCount"
                                             max-size="4"
-                                            ng-change="select(currentPage)"
+                                            ng-change=""
                                             items-per-page="10"
                                             rotate="false"
                                             previous-text="Назад" next-text="Далее"

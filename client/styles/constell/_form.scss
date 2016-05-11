@@ -1,0 +1,52 @@
+// Constell form styles
+.add-tender-step .constell-block-title {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.constell-form-wrapper {
+
+    md-select {
+        margin: 0 15px;
+        border: 1px solid $input-border;
+        height: 38px;
+        border-radius: 2px;
+
+        &:focus {
+            border: 1px solid $brand-primary;
+        }
+
+        .md-select-value {
+            border: none !important;
+            padding: 2px 12px !important;
+            margin-top: -3px;
+        }
+    }
+
+    .form-group + .form-group {
+        margin-top: 30px;
+    }
+
+    md-list {
+        padding-top: 0;
+        box-shadow: $boxShadow;
+    }
+    .md-list-container {
+        max-height: 450px !important;
+        overflow: auto;
+    }
+    .md-subheader .md-subheader-inner {
+        @extend .constell-block-title;
+        margin: 0;
+        margin-bottom: 10px;
+
+        .controlls-btns {
+            padding-left: 0;
+        }
+    }
+
+    .steps-nav {
+        margin-top: 30px;
+        float: right;
+    }
+}

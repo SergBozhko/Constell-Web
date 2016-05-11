@@ -23,7 +23,7 @@
     font-weight: 700;
     margin: 25px 8px;
     overflow: hidden;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: $boxShadow;
 }
 .constell-block-title.mt-mini {
     margin-top: 15px;
@@ -79,6 +79,10 @@
         background-color: rgba(0,188,212,0.87);
     }
 
+}
+
+.constell-table-icon {
+    font-size: 22px;
 }
 
 .constell-table-filters {

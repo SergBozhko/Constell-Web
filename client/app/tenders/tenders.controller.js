@@ -7,7 +7,8 @@
 
     angular.module('app.tenders')
         .controller('TendersCtrl', ['rest', TendersCtrl])
-        .controller('TenderStatsCtrl', ['rest', '$stateParams', TenderStatsCtrl]);
+        .controller('TenderStatsCtrl', ['rest', '$stateParams', TenderStatsCtrl])
+        .controller('TendersAdd', ['rest', 'formSteps', TendersAdd]);
 
     // Tenders ctrl
     function TendersCtrl(rest) {
@@ -229,16 +230,57 @@
                 ]
             };
 
-            self.stats.$promise.then(function(response) {
-                response.certified.forEach(function(element) {
+            self.stats.$promise.then(function (response) {
+                response.certified.forEach(function (element) {
                     element[0] = new Date(element[0]);
                 });
-                response.simple.forEach(function(element) {
+                response.simple.forEach(function (element) {
                     element[0] = new Date(element[0]);
                 });
             });
 
         });
+
+    }
+
+    // Tender add
+    function TendersAdd(rest, formSteps) {
+
+        var self = this;
+
+        // Tabs controll
+        self.stepsControlls = formSteps;
+        self.goToStep = goToStep;
+        self.nextPosition = 'second';
+        self.prevPosition = 'first';
+        var stepsCtrl = self.stepsControlls.steps;
+
+        function resetSteps() {
+            for (var i in stepsCtrl) {
+                if (stepsCtrl.hasOwnProperty(i)) {
+                    stepsCtrl[i].active = false;
+                }
+            }
+        }
+
+        function goToStep(index) {
+            resetSteps();
+
+            stepsCtrl[index].active = true;
+            stepsCtrl[index].enable = true;
+
+            (stepsCtrl.second.active) ? self.stepsControlls.finish = true : self.stepsControlls.finish = false;
+        }
+
+
+        // Add tender data
+        self.getPositions = getPositions;
+
+        self.categoryList = rest.get({customUrl: 'Tender/GetCategories'});
+
+        function getPositions() {
+            self.positionsList = rest.get({customUrl: 'Position/GetPositions', categoryId: self.categoryValue});
+        }
 
     }
 

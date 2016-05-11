@@ -1,0 +1,72 @@
+<!--Tenders add page-->
+<div class="page page-table">
+
+    <section class="tender-add-container constell-wizard-form constell-form-wrapper">
+
+        <div class="row ui-section">
+            <div class="col-lg-8 clearfix">
+                <h2 class="section-header">Добавить тендер</h2>
+            </div>
+            <div class="col-md-12">
+                <section class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="ui-wizard-form">
+                            <div class="col-sm-12">
+
+                                <!--Steps Controlls-->
+                                <div class="row steps-controlls-row">
+                                    <div class="steps-controlls">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6">
+                                                <button class="btn btn-primary"
+                                                        ng-class="{'active' : tender.stepsControlls.steps.first.active}"
+                                                        ng-click="tender.goToStep('first')">1. Детали
+                                                </button>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6">
+                                                <button ng-disabled="!tender.stepsControlls.steps.second.enable"
+                                                        ng-class="{'active' : tender.stepsControlls.steps.second.active}"
+                                                        class="btn btn-primary" ng-click="tender.goToStep('second')">2.
+                                                    Креатив
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <section class="steps-container">
+                                    <div class="row">
+
+                                        <!--First Step-->
+                                        <form action="" class="form-horizontal tender-add" name="addTenderFirstStep">
+                                            <div ng-if="tender.stepsControlls.steps.first.active" class="add-tender-step">
+                                                <div class="first-wizard-slide">
+                                                    <div class="add-tender-first"
+                                                         ng-include="'app/tenders/add_steps/first_step.html'"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        <!--Second Step-->
+                                        <form action="" class="form-horizontal tender-add" name="addTenderSecStep">
+                                            <div ng-if="tender.stepsControlls.steps.second.active" class="add-tender-step">
+                                                <div class="second-wizard-slide">
+                                                    <div class="add-tender-second"
+                                                         ng-include="'app/tenders/add_steps/second_step.html'"></div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </section>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+</div>

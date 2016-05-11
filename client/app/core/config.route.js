@@ -40,6 +40,8 @@
                 templateUrl: 'app/dashboard/dashboard.html'
             });
 
+
+            // Users
             $stateProvider.state('users', {
                 url: '/users',
                 templateUrl: 'app/users/users.html',
@@ -47,6 +49,8 @@
                 controllerAs: 'users'
             });
 
+
+            // Tenders
             $stateProvider.state('tenders', {
                 url: '/tenders',
                 templateUrl: 'app/tenders/tenders.html',
@@ -57,6 +61,12 @@
                 url: '/tenders/:tender',
                 templateUrl: 'app/tenders/tender.stats.html',
                 controller: 'TenderStatsCtrl',
+                controllerAs: 'tender'
+            });
+            $stateProvider.state('tenderAdd', {
+                url: '/tenders/add/',
+                templateUrl: 'app/tenders/tender.add.html',
+                controller: 'TendersAdd',
                 controllerAs: 'tender'
             });
 

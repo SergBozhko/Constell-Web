@@ -1,0 +1,54 @@
+<div class="constell-block-title mt-mini">Выберите категорию</div>
+<!--Category list-->
+<div class="form-group">
+    <label for="" class="col-sm-12">Категория</label>
+    <md-select ng-model="tender.categoryValue" data-ng-change="tender.getPositions()" placeholder="Выбрать">
+        <md-option ng-repeat="category in tender.categoryList.Result" value="{{category.id}}">
+            {{category.title}}
+        </md-option>
+    </md-select>
+</div>
+
+<div class="form-group">
+    <label for="" class="col-sm-12">Позиции</label>
+    <div class="col-sm-12">
+        <md-list>
+            <md-subheader class="md-no-sticky">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <form>
+                            <input type="text"
+                                   placeholder="Найти..."
+                                   class="form-control"
+                                   data-ng-model="searchKeywords">
+                        </form>
+                    </div>
+                    <div class="col-sm-8 controlls-btns">
+                        <button class="btn btn-primary">Все</button>
+                        <button class="btn btn-primary">Очистить</button>
+                    </div>
+                </div>
+            </md-subheader>
+            <div class="md-list-container">
+                <md-list-item ng-repeat="position in tender.positionsList.Result">
+                    <p> {{ position.title }} </p>
+                    <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
+                </md-list-item>
+            </div>
+        </md-list>
+    </div>
+</div>
+
+<!--Steps nav-->
+<div class="steps-nav clearfix">
+        <span ng-if="tender.addCampSecondStep.$invalid" ui-wave tooltip-placement="left" uib-tooltip="Не все поля заполнены"
+              tooltip-append-to-body="true"
+              class="form-required"><i class="zmdi zmdi-alert-circle-o"></i></span>
+    <a class="btn btn-primary"
+       ng-click="tender.goToStep('first')">Назад
+    </a>
+    <a class="btn btn-primary"
+       ng-class="{'disabled' : tender.addCampSecondStep.$invalid}"
+       ng-click="tender.addTender()">Завершить
+    </a>
+</div>
