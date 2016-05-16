@@ -42,7 +42,7 @@
                         <thead>
                         <tr>
                             <th>
-                                <div class="th">
+                                <div class="th" ng-click="tenders.orderList('id', 'desc')">
                                     ID
                                 </div>
                             </th>
@@ -104,22 +104,17 @@
                 <footer class="table-footer">
                     <div class="row">
                         <div class="col-md-6 page-num-info">
-                <span>
-                Show
-                <select data-ng-model="numPerPage"
-                        data-ng-options="num for num in numPerPageOpt"
-                        data-ng-change="onNumPerPageChange()">
-                </select>
-                entries per page
-                </span>
+                            <span>
+                                Всего элементов: {{tenders.tenderCnfg.totalCount}}
+                            </span>
                         </div>
                         <div class="col-md-6 text-right pagination-container">
                             <uib-pagination class="pagination-sm"
-                                            ng-model="tenders.list.Result"
-                                            total-items="tenders.list.TotalItemsCount"
+                                            ng-model="tenders.tenderCnfg.Page"
+                                            total-items="tenders.tenderCnfg.totalCount"
                                             max-size="4"
-                                            ng-change=""
-                                            items-per-page="10"
+                                            ng-change="tenders.getTenders()"
+                                            items-per-page="tenders.tenderCnfg.PerPage"
                                             rotate="false"
                                             previous-text="Назад" next-text="Далее"
                                             boundary-links="false"></uib-pagination>

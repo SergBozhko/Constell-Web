@@ -41,11 +41,13 @@
 
     // Table styles
     .table-striped > tbody > tr:nth-of-type(odd) {
-        background-color: rgba(66, 139, 202, 0.1);
+        //background-color: rgba(66, 139, 202, 0.1);
+        background-color: rgba(193, 193, 193, 0.1);
     }
     .table tbody tr td {
         text-align: center;
         vertical-align: middle;
+        position: relative;
     }
     .table tbody tr td.left-align {
         text-align: left !important;
@@ -62,6 +64,11 @@
     .table > thead > tr > th {
         text-align: center;
         vertical-align: middle;
+        border-bottom-width: 1px;
+    }
+    .table > thead > tr {
+        background-color: #428BCA;
+        color: #fff;
     }
     .table thead th > .th {
         padding: 15px !important;
@@ -83,6 +90,9 @@
 
 .constell-table-icon {
     font-size: 22px;
+}
+.c-regular-style {
+    color: $brand-primary;
 }
 
 .constell-table-filters {

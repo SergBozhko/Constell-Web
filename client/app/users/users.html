@@ -62,17 +62,7 @@
                             </th>
                             <th>
                                 <div class="th">
-                                    Адрес
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
                                     Роль
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
-                                    Проверенный
                                 </div>
                             </th>
                         </tr>
@@ -85,17 +75,16 @@
                             <td>{{user.name}}</td>
                             <td>{{user.phone}}</td>
                             <td>{{user.email}}</td>
-                            <td>{{user.city}}</td>
                             <td>
-                                <i class="zmdi constell-table-icon"
+                                <i class="zmdi zmdi-account-box constell-table-icon"
                                     tooltip-placement="top"
                                     tooltip-append-to-body="true"
                                     uib-tooltip="{{user.role}}"
                                     ng-class="{
-                                        'zmdi-account-box': user.roleId == 'user'
+                                        'c-user-style': user.roleId == 'user',
+                                        'c-regular-style': user.roleId == 'regular'
                                     }"></i>
                             </td>
-                            <td><md-checkbox ng-model="user.isCertified" data-ng-disabled="true"> {{ checkbox.cb1 }} </md-checkbox></td>
                         </tr>
                         </tbody>
                     </table>

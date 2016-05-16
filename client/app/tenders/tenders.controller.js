@@ -15,11 +15,54 @@
 
         var self = this;
 
-        self.list = rest.get({customUrl: 'Tender/GetTenders'});
+        /**
+         * Tenders init functions
+         */
+        self.getTenders = getTenders;
+        self.orderList = orderList;
 
-        self.list.$promise.then(function (response) {
-            console.log(response);
-        });
+
+        /**
+         * @type {{customUrl: string, Page: number, PerPage: number}}
+         * Main tenders config obj
+         */
+        self.tenderCnfg = {
+            customUrl: 'Tender/GetTenders',
+            Page: 1,
+            PerPage: 15
+        };
+
+        /**
+         * Get tender list
+         */
+        function getTenders() {
+
+            self.list = rest.get(self.tenderCnfg);
+
+            self.list.$promise.then(function (response) {
+                self.tenderCnfg.totalCount = response.TotalItemsCount;
+                console.log(self.tenderCnfg.customUrl, ': ', response);
+            });
+        }
+
+        /**
+         * @param {string} orderField Obj to sort
+         * @param {string} orderBy Sort type
+         * Description:
+         * Sort function
+         */
+        function orderList(orderField, orderBy) {
+            // OrderBy
+            self.tenderCnfg.OrderBy = [];
+            self.tenderCnfg.OrderBy.push({
+                course: orderBy,
+                target: orderField
+            });
+
+            getTenders();
+        }
+
+        getTenders();
 
 
         // Traffic chart
@@ -28,6 +71,7 @@
 
         var xAxisData = [];
 
+        // Graph init
         self.graph.$promise.then(function (response) {
             self.combo = {};
             self.combo.options = {
