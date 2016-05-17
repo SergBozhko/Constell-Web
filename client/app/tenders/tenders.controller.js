@@ -6,15 +6,14 @@
     'use strict';
 
     angular.module('app.tenders')
-        .controller('TendersCtrl', ['rest', TendersCtrl])
+        .controller('TendersCtrl', ['MainSettings', '$http', 'rest', 'Errors', TendersCtrl])
         .controller('TenderStatsCtrl', ['rest', '$stateParams', TenderStatsCtrl])
         .controller('TendersAdd', ['rest', 'formSteps', TendersAdd]);
 
     // Tenders ctrl
-    function TendersCtrl(rest) {
+    function TendersCtrl(MainSettings, $http, rest, Errors) {
 
         var self = this;
-
         /**
          * Tenders init functions
          */
@@ -35,14 +34,19 @@
         /**
          * Get tender list
          */
+        // TODO: Check only self.tenderCnfg sending into self.list
         function getTenders() {
 
-            self.list = rest.get(self.tenderCnfg);
+            console.log('Высылаю ', self.tenderCnfg);
+
+            self.list = rest.save(MainSettings.serverDirect() + '/api/' + self.tenderCnfg.customUrl, self.tenderCnfg);
+
 
             self.list.$promise.then(function (response) {
                 self.tenderCnfg.totalCount = response.TotalItemsCount;
                 console.log(self.tenderCnfg.customUrl, ': ', response);
             });
+
         }
 
         /**

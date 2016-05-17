@@ -11,7 +11,7 @@
         // Main REST factory
         .factory('rest',  ['$resource', 'MainSettings', function ($resource, MainSettings) {
             return $resource(MainSettings.serverDirect() + 'api/:customUrl', {
-                addUrl: '@customUrl'
+                customUrl: '@customUrl'
             }, {
                 'query':  {method:'GET', isArray: true},
                 'get':  {method:'GET', isArray: false}

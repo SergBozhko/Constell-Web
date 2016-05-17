@@ -12,3 +12,13 @@
     display: block;
     width: 100%;
 }
+
+// Error window
+.error-message-window {
+    width: 300px;
+    position: absolute;
+    right: 0;
+    top: 100px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+}

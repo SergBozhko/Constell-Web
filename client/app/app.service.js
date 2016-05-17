@@ -7,10 +7,19 @@
     'use strict';
 
     angular.module('app')
-        .service('Errors', ['$scope', '$state', Errors]);
+        .service('Errors', ['$rootScope', '$state', '$timeout', Errors])
+        .service('tableControlls', tableControlls);
 
     // Errors
-    function Errors($scope, $state) {
+    function Errors($rootScope, $state, $timeout) {
+
+        function showErrorWindow() {
+            $rootScope.errorMessageShow = true;
+
+            $timeout(function() {
+                $rootScope.errorMessageShow = false;
+            }, 5000);
+        }
 
         // Main errors
         this.main = function(response) {
@@ -19,7 +28,9 @@
 
                 case 400: {
                     console.log('Bad request!');
-                    $scope.errorMessage = response.errorMessage;
+                    $rootScope.errorMessage = response.message;
+
+                    showErrorWindow();
                 } break;
 
                 case 401: {
@@ -29,17 +40,27 @@
 
                 case 405: {
                     console.log('Method is not allowed!');
-                    $scope.errorMessage = response.errorMessage;
+                    $rootScope.errorMessage = response.message;
+
+                    showErrorWindow();
                 } break;
 
                 case 500: {
                     console.log('Server error!');
-                    $scope.errorMessage = response.errorMessage;
+                    $rootScope.errorMessage = response.message;
+
+                    showErrorWindow();
                 } break;
 
             }
 
         };
+
+    }
+
+
+    // Table controlls functions
+    function tableControlls() {
 
     }
 
