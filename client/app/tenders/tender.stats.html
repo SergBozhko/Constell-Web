@@ -8,38 +8,79 @@
         <div class="col-md-12">
             <section class="panel panel-default table-dynamic">
 
-                <div class="constell-graph-area">
-                    <div class="constell-block-title mt-mini">Статистика</div>
-                    <div data-echarts data-options="tender.combo.options" style="height: 360px;"></div>
-                </div>
+                <div class="constell-block-title mt-mini">Последние предложения</div>
 
-                <div class="col-md-12">
-                    <div class="panel panel-default panel-labeled constell-panel-list">
-                        <div class="panel-body">
-                            <span class="panel-label">Информация</span>
-                            <ul class="list-group no-margin">
-                                <li class="list-group-item">{{tender.info.title}}</li>
-                                <li class="list-group-item"><b>Категория: </b>{{tender.info.category}}</li>
-                                <li class="list-group-item">
-                                    <b>Минимальное предложение: </b>
-                                    <span ng-if="tender.info.minPrice == null">отсутствует</span>
-                                    <span ng-if="tender.info.minPrice != null">{{tender.info.minPrice}} руб.</span>
+                <div class="tender-best-offers-wrapper">
+                    <!--Best offers table-->
+                    <div class="best-offers-table-wrapper">
+                        <div class="table-wrapper">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <div class="th">
+                                            Позиция
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Объем
+                                        </div>
+                                    </th>
+                                    <th ng-repeat="offerTitle in tender.offers.headerList">
+                                        <div class="th">
+                                            {{offerTitle}}
+                                        </div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="offer in tender.offers.positions">
+                                    <td>{{offer.positionTitle}}</td>
+                                    <td>{{offer.positionAmount}}</td>
+                                    <td ng-repeat="offerValue in offer.positionPriceList">
+                                        <span ng-if="offerValue != null">{{offerValue}}</span>
+                                        <span ng-if="offerValue == null">-</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Статус тендера: </b>
-                                    <span ng-if="tender.info.isOpenTender">открыт</span>
-                                    <span ng-if="!tender.info.isOpenTender">закрыт</span>
-                                </li>
-                                <li class="list-group-item" ng-if="tender.info.isOpenTender">
-                                    <b>Дата начала: </b> {{tender.info.startTime}}
-                                </li>
-                            </ul>
+                    <!--Main inforamtion-->
+                    <div class="col-md-12 constell-panel-info">
+                        <div class="panel panel-default panel-labeled constell-panel-list">
+                            <div class="panel-body">
+                                <span class="panel-label">Информация</span>
+                                <ul class="list-group no-margin">
+                                    <li class="list-group-item">{{tender.info.title}}</li>
+                                    <li class="list-group-item"><b>Категория: </b>{{tender.info.category}}</li>
+                                    <li class="list-group-item">
+                                        <b>Минимальное предложение: </b>
+                                        <span ng-if="tender.info.minPrice == null">отсутствует</span>
+                                        <span ng-if="tender.info.minPrice != null">{{tender.info.minPrice}} руб.</span>
+
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Статус тендера: </b>
+                                        <span ng-if="tender.info.isOpenTender">открыт</span>
+                                        <span ng-if="!tender.info.isOpenTender">закрыт</span>
+                                    </li>
+                                    <li class="list-group-item" ng-if="tender.info.isOpenTender">
+                                        <b>Дата начала: </b> {{tender.info.startTime}}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="constell-block-title">Предложения</div>
+                <div class="constell-graph-area">
+                    <div class="constell-block-title mt-mini">Все предложения</div>
+
+                    <div data-echarts data-options="tender.combo.options" style="height: 360px;"></div>
+                </div>
 
                 <div class="table-filters">
                     <div class="row">
@@ -96,15 +137,18 @@
                             </th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr data-ng-repeat="tender in tender.info.offers">
-                            <td>{{tender.userId}}</td>
-                            <td>{{tender.userName}}</td>
-                            <td>{{tender.price}}</td>
-                            <td>{{tender.dateStr}}</td>
-                            <td>{{tender.comments}}</td>
-                            <td><md-checkbox ng-model="tender.isCertified" data-ng-disabled="true"> {{ checkbox.cb1 }} </md-checkbox></td>
-                        </tr>
+                        <tbody data-ng-repeat="tender in tender.info.offers">
+                            <tr>
+                                <td>{{tender.userId}}</td>
+                                <td>{{tender.userName}}</td>
+                                <td>{{tender.price}}</td>
+                                <td>{{tender.dateStr}}</td>
+                                <td>{{tender.comments}}</td>
+                                <td><md-checkbox ng-model="tender.isCertified" data-ng-disabled="true"> {{ checkbox.cb1 }} </md-checkbox></td>
+                            </tr>
+                            <tr ng-repeat="children in tender.childrens">
+                                <td>{{children.id}}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

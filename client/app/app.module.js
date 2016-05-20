@@ -38,7 +38,7 @@
                 return this.localUrl;
             }
         },
-        localUrl: 'http://192.168.0.102/lynxDashboard/',
+        localUrl: 'http://192.168.0.104/lynxDashboard/',
         devServUrl: 'http://devsystem.lynx.pro/',
         releaseServer: 'http://constellsystem.lynx.pro/',
         account: 'api/Account/',

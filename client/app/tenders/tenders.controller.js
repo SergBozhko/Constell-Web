@@ -182,13 +182,25 @@
 
         var self = this;
 
+        // Get best offers
+        self.offers = rest.get({customUrl: 'Tender/GetBestOffers', tenderId: $stateParams.tender});
+
+        self.offers.$promise.then(function(response) {
+           console.log('Tender/GetBestOffers ', response);
+        });
+
+        // Info about tender
         self.info = rest.get({customUrl: 'Tender/GetTender/', id: $stateParams.tender});
+
+        self.info.$promise.then(function(response) {
+           console.log('Tender/GetTender (Info about tender)', response);
+        });
 
         // Tender stats
         self.stats = rest.get({customUrl: 'Tender/GetDataOfGraphForTender', tenderId: $stateParams.tender});
 
         self.stats.$promise.then(function (response) {
-            console.log(response);
+            console.log('Tender/GetDataOfGraphForTender ', response);
 
             self.combo = {};
             self.combo.options = {
