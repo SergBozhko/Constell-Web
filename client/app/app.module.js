@@ -22,6 +22,7 @@
         ,'ngMap'
         ,'textAngular'
         ,'ngResource'
+        ,'ngLodash'
 
     ])
     .constant('MainSettings', {
@@ -40,7 +41,7 @@
         },
         localUrl: 'http://192.168.0.104/lynxDashboard/',
         devServUrl: 'http://devsystem.lynx.pro/',
-        releaseServer: 'http://constellsystem.lynx.pro/',
+        releaseServer: 'http://tenders.lynx.pro/system/',
         account: 'api/Account/',
 
         // Logging mode trigger

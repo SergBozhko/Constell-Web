@@ -6,6 +6,48 @@
         margin-bottom: 0;
     }
 }
+// Checkbox
+md-checkbox.md-checked .md-icon {
+    background-color: $brand-primary;
+}
+
+// md-switches
+md-switch.md-checked.md-primary .md-thum,
+md-switch.md-checked.md-primary .md-ink-ripple {
+    background-color: $brand-primary !important;
+    color: $brand-primary !important;
+}
+md-switch.md-checked.md-primary .md-bar {
+    background-color: rgb(102, 168, 226);
+}
+.switch-row  {
+    margin-bottom: 15px;
+    md-switch {
+        margin: 0;
+    }
+}
+.switch-row label {
+    margin: 6px 0;
+}
+
+// Constell preloader
+.constell-loader {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    border-top: 2px solid $brand-primary;
+    animation: constell-preloader .5s linear infinite;
+}
+@keyframes constell-preloader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 // Constell panel info
 .constell-panel-info {
@@ -28,3 +70,4 @@
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
 }
+

@@ -8,7 +8,7 @@
     angular.module('app.tenders')
         .controller('TendersCtrl', ['MainSettings', '$http', 'rest', 'Errors', TendersCtrl])
         .controller('TenderStatsCtrl', ['rest', '$stateParams', TenderStatsCtrl])
-        .controller('TendersAdd', ['rest', 'formSteps', TendersAdd]);
+        .controller('TendersAdd', ['rest', 'formSteps', 'addTenderModel', 'lodash', TendersAdd]);
 
     // Tenders ctrl
     function TendersCtrl(MainSettings, $http, rest, Errors) {
@@ -185,15 +185,15 @@
         // Get best offers
         self.offers = rest.get({customUrl: 'Tender/GetBestOffers', tenderId: $stateParams.tender});
 
-        self.offers.$promise.then(function(response) {
-           console.log('Tender/GetBestOffers ', response);
+        self.offers.$promise.then(function (response) {
+            console.log('Tender/GetBestOffers ', response);
         });
 
         // Info about tender
         self.info = rest.get({customUrl: 'Tender/GetTender/', id: $stateParams.tender});
 
-        self.info.$promise.then(function(response) {
-           console.log('Tender/GetTender (Info about tender)', response);
+        self.info.$promise.then(function (response) {
+            console.log('Tender/GetTender (Info about tender)', response);
         });
 
         // Tender stats
@@ -304,9 +304,12 @@
     }
 
     // Tender add
-    function TendersAdd(rest, formSteps) {
+    function TendersAdd(rest, formSteps, addTenderModel, lodash) {
 
         var self = this;
+
+        // Preloaders
+        self.positionsPreloader = true;
 
         // Tabs controll
         self.stepsControlls = formSteps;
@@ -333,13 +336,79 @@
         }
 
 
-        // Add tender data
+        // ====== Add tender data ======
         self.getPositions = getPositions;
+        self.open = open;
+        self.setDate = setDate;
+        self.setPosition = setPosition;
+        self.addTender = addTender;
+        // Add tender model obj
+        self.addTenderModel = addTenderModel;
+        // Init date
+        var dateToday = new Date();
+        self.addTenderModel.StartDate = new Date();
+        self.addTenderModel.EndDate = dateToday;
+        self.addTenderModel.EndDate.setMonth(dateToday.getMonth() + 1);
 
         self.categoryList = rest.get({customUrl: 'Tender/GetCategories'});
 
         function getPositions() {
-            self.positionsList = rest.get({customUrl: 'Position/GetPositions', categoryId: self.categoryValue});
+            self.positionsPreloader = true;
+            self.addTenderModel.PositionList = [];
+            self.positionsList = rest.get({
+                customUrl: 'Position/GetPositions',
+                categoryId: self.addTenderModel.CategoryId
+            });
+
+            self.positionsList.$promise.then(function (response) {
+                self.positionsPreloader = false;
+
+                console.log('Position/GetPositions (Позиции)', response);
+            });
+        }
+
+
+        // Date picker
+        self.status = {
+            startDate: false,
+            endDate: false
+        };
+        function open(datePicker) {
+            self.status[datePicker] = true;
+        }
+
+        function setDate(year, month, day) {
+            self.dt = new Date(year, month, day);
+        }
+
+        /**
+         * @param positionId Id Позиции
+         * @param title Название позиции
+         * Set position to array
+         */
+        function setPosition(positionId, title, unit, currency) {
+            var setPosObj = {
+                    positionId: positionId,
+                    title: title,
+                    amount: null,
+                    minPrice: null,
+                    unit: unit,
+                    currency: currency
+                },
+                posIndex = lodash.findIndex(self.addTenderModel.PositionList, setPosObj);
+
+            if (posIndex == -1) {
+                self.addTenderModel.PositionList.push(setPosObj);
+            } else {
+                self.addTenderModel.PositionList.splice(posIndex);
+            }
+
+        }
+
+        // Save tender
+        function addTender() {
+            console.log('Отсылаю ', self.addTenderModel);
+            rest.save({customUrl: 'Tender/SaveTender'}, self.addTenderModel);
         }
 
     }

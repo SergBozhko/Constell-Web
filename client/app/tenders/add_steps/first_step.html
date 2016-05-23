@@ -2,16 +2,16 @@
 <!--Category list-->
 <div class="form-group">
     <label for="" class="col-sm-12">Категория</label>
-    <md-select ng-model="tender.categoryValue" data-ng-change="tender.getPositions()" placeholder="Выбрать">
+    <md-select ng-model="tender.addTenderModel.CategoryId" data-ng-change="tender.getPositions()" placeholder="Выбрать">
         <md-option ng-repeat="category in tender.categoryList.Result" value="{{category.id}}">
             {{category.title}}
         </md-option>
     </md-select>
 </div>
 
-<div class="form-group">
+<div ng-if="tender.addTenderModel.CategoryId != null" class="form-group">
     <label for="" class="col-sm-12">Позиции</label>
-    <div class="col-sm-12">
+    <div class="col-sm-12 subheader-block">
         <md-list>
             <md-subheader class="md-no-sticky">
                 <div class="row">
@@ -29,19 +29,26 @@
                     </div>
                 </div>
             </md-subheader>
-            <div class="md-list-container">
+            <div ng-if="!tender.positionsPreloader" class="md-list-container">
                 <md-list-item ng-repeat="position in tender.positionsList.Result">
                     <p> {{ position.title }} </p>
-                    <md-checkbox class="md-secondary" ng-model="topping.wanted"></md-checkbox>
+                    <md-checkbox class="md-secondary"
+                                 ng-change="tender.setPosition(position.id, position.title, position.unit, position.currency)"
+                                 ng-true-value="{{position.id}}"
+                                 ng-model="position.checkbox"></md-checkbox>
                 </md-list-item>
+                <p class="text-center" ng-if="tender.positionsList.Result.length == 0">Позиции отсутствуют</p>
             </div>
         </md-list>
+
+        <div ng-if="tender.positionsPreloader" class="constell-loader"></div>
     </div>
 </div>
 
 <!--Steps nav-->
 <div class="steps-nav clearfix">
-        <span ng-if="tender.addCampFirstStep.$invalid" ui-wave tooltip-placement="left" uib-tooltip="Не все поля заполнены"
+        <span ng-if="tender.addCampFirstStep.$invalid" ui-wave tooltip-placement="left"
+              uib-tooltip="Не все поля заполнены"
               tooltip-append-to-body="true"
               class="form-required"><i class="zmdi zmdi-alert-circle-o"></i></span>
     <a class="btn btn-primary"

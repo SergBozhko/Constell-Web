@@ -16,6 +16,7 @@
 }
 
 .constell-block-title {
+    position: relative;
     padding: 15px;
     background-color: $bgTitle;
     color: #428bca;
@@ -25,8 +26,17 @@
     overflow: hidden;
     box-shadow: $boxShadow;
 }
+
 .constell-block-title.mt-mini {
     margin-top: 15px;
+}
+
+.subheader-block {
+    .constell-loader {
+        right: 30px;
+        top: 19px;
+        bottom: 19px;
+    }
 }
 
 .constell-panel-list .panel-label {
@@ -39,7 +49,14 @@
     overflow-x: auto;
     margin: 0 8px;
 
+    &.table-main-p {
+        margin: 0 15px;
+    }
+
     // Table styles
+    .table > thead > tr > th {
+        padding: 0;
+    }
     .table-striped > tbody > tr:nth-of-type(odd) {
         //background-color: rgba(66, 139, 202, 0.1);
         background-color: rgba(193, 193, 193, 0.1);
@@ -83,14 +100,34 @@
     }
     .table md-checkbox.md-default-theme[disabled].md-checked .md-icon,
     md-checkbox[disabled].md-checked .md-icon {
-        background-color: rgba(0,188,212,0.87);
+        background-color: rgba(0, 188, 212, 0.87);
     }
 
+    .disabled-th {
+        background-color: $bgTitle;
+        color: $brand-primary;
+    }
+
+}
+.table-inner-input {
+    position: relative;
+
+    input {
+        padding-right: 45px;
+    }
+    .constell-unit {
+        position: absolute;
+        right: 15px;
+        top: 0;
+        bottom: 0;
+        line-height: 38px;
+    }
 }
 
 .constell-table-icon {
     font-size: 22px;
 }
+
 .c-regular-style {
     color: $brand-primary;
 }
