@@ -108,6 +108,10 @@
         color: $brand-primary;
     }
 
+    .md-select[disabled] .md-select-value {
+        color: #000 !important;
+    }
+
 }
 .table-inner-input {
     position: relative;

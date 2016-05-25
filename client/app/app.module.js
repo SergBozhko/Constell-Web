@@ -16,6 +16,7 @@
         // Constell modules
         ,'app.users'
         ,'app.tenders'
+        ,'app.positions'
 
         // 3rd party feature modules
         ,'ui.tree'
@@ -39,7 +40,7 @@
                 return this.localUrl;
             }
         },
-        localUrl: 'http://192.168.0.104/lynxDashboard/',
+        localUrl: 'http://192.168.0.101/lynxDashboard/',
         devServUrl: 'http://devsystem.lynx.pro/',
         releaseServer: 'http://tenders.lynx.pro/system/',
         account: 'api/Account/',

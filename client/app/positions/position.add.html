@@ -1,0 +1,121 @@
+<!--Tenders add page-->
+<div class="page page-table">
+
+    <section class="tender-add-container constell-wizard-form constell-form-wrapper">
+
+        <div class="row ui-section">
+            <div class="col-lg-8 clearfix">
+                <h2 class="section-header">Добавить позицию</h2>
+            </div>
+            <div class="col-md-12">
+                <section class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <!--Add posiotion form-->
+                                <form action="" class="form-horizontal position-add" name="addPosition">
+
+                                    <div class="constell-block-title mt-mini">Выберите категорию</div>
+                                    <!--Category list-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Категория</label>
+                                        <md-select ng-model="positionAdd.positionAddObj.CategoryId"
+                                                   placeholder="Выбрать">
+                                            <md-option ng-repeat="category in positionAdd.posCategory.Result"
+                                                       value="{{category.id}}">
+                                                {{category.title}}
+                                            </md-option>
+                                        </md-select>
+                                    </div>
+
+                                    <div class="constell-block-title mt-mini">Информация о позиции</div>
+                                    <!--Position name-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Название позиции</label>
+                                        <div class="col-sm-12">
+                                            <input ng-model="positionAdd.positionAddObj.Title" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <!--Position parametries-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Параметры позиции</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="" ng-model="positionAdd.positionAddObj.MaterialParametrs" class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!--Position place-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Место поставки</label>
+                                        <md-select ng-model="positionAdd.positionAddObj.MaterialPlace"
+                                                   data-ng-change="tender.getPositions()" placeholder="Выбрать">
+                                            <md-option ng-repeat="factory in positionAdd.posFactories"
+                                                       value="{{factory.id}}">
+                                                {{factory.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </div>
+
+                                    <!--Position terms-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Сроки поставки</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="" ng-model="positionAdd.positionAddObj.MaterialTerms" class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!--Position conditions-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Условия поставки</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="" ng-model="positionAdd.positionAddObj.MaterialConditions" class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!--Position unit-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Единица измерения</label>
+                                        <md-select ng-model="positionAdd.positionAddObj.Unit"
+                                                   data-ng-change="tender.getPositions()" placeholder="Выбрать">
+                                            <md-option ng-repeat="unit in positionAdd.posUnits"
+                                                       value="{{unit.id}}">
+                                                {{unit.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </div>
+
+                                    <!--Position Currency-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Валюта</label>
+                                        <md-select ng-model="positionAdd.positionAddObj.Currency"
+                                                   data-ng-change="tender.getPositions()" placeholder="Выбрать">
+                                            <md-option ng-repeat="currency in positionAdd.posCurrencys"
+                                                       value="{{currency.id}}">
+                                                {{currency.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </div>
+
+                                    <!--Position contacts-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Контакты</label>
+                                        <div class="col-sm-12">
+                                            <textarea name="" ng-model="positionAdd.positionAddObj.Contacts" class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                                <button ng-click="positionAdd.savePosition()" class="btn btn-pimary">Добавиить</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+</div>

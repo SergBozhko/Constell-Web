@@ -1,0 +1,216 @@
+<!--Tenders add page-->
+<div class="page page-table">
+
+    <section class="tender-add-container constell-wizard-form constell-form-wrapper">
+
+        <div class="row ui-section">
+            <div class="col-lg-8 clearfix">
+                <h2 class="section-header">Редактировать тендер</h2>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <section class="panel panel-default">
+                        <div class="panel-body">
+                            <form action="" class="form-horizontal tender-edit" name="TenderEdit">
+                                <div class="constell-block-title mt-mini">{{tenderEdit.tenderToEdit.title}}</div>
+                                <uib-tabset justified="true" class="ui-tab">
+                                    <uib-tab heading="Детали">
+                                        <!--Tender name-->
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-12">Название тендера</label>
+                                            <div class="col-sm-12">
+                                                <input ng-model="tenderEdit.addTenderModel.Title" type="text"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <!--Tender date-->
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="row">
+                                                    <label for="" class="col-sm-12">Дата начала</label>
+                                                </div>
+                                                <div class="input-group ui-datepicker">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           uib-datepicker-popup="{{format}}"
+                                                           ng-model="tenderEdit.addTenderModel.StartDate"
+                                                           is-open="tenderEdit.status.startDate"
+                                                           min-date="minDate"
+                                                           max-date="maxDate"
+                                                           datepicker-options="dateOptions"
+                                                           date-disabled="disabled(date, mode)"
+                                                           ng-required="true"
+                                                           close-text="Close"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="tenderEdit.open('startDate')"><i
+                                                        class="fa fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class="row">
+                                                    <label for="" class="col-sm-12">Дата завершения</label>
+                                                </div>
+                                                <div class="input-group ui-datepicker">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           uib-datepicker-popup="{{format}}"
+                                                           ng-model="tenderEdit.addTenderModel.EndDate"
+                                                           is-open="tenderEdit.status.endDate"
+                                                           min-date="minDate"
+                                                           max-date="maxDate"
+                                                           datepicker-options="dateOptions"
+                                                           date-disabled="disabled(date, mode)"
+                                                           ng-required="true"
+                                                           close-text="Close"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="tenderEdit.open('endDate')"><i
+                                                        class="fa fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--Tender switches-->
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="row switch-row">
+                                                    <label for="" class="col-sm-3">Открытый тендер</label>
+                                                    <div class="col-sm-3">
+                                                        <md-switch ng-model="tenderEdit.addTenderModel.IsOpenTender"
+                                                                   class="md-primary"></md-switch>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row switch-row">
+                                                    <label for="" class="col-sm-3">Активный тендер</label>
+                                                    <div class="col-sm-3">
+                                                        <md-switch ng-model="tenderEdit.addTenderModel.IsActive"
+                                                                   class="md-primary"></md-switch>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="row switch-row">
+                                                    <label for="" class="col-sm-3">Только для постоянных
+                                                        поставщиков</label>
+                                                    <div class="col-sm-3">
+                                                        <md-switch ng-model="tenderEdit.addTenderModel.ForCertificed"
+                                                                   class="md-primary"></md-switch>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div ng-if="tenderEdit.addTenderModel.PositionList.length != 0"
+                                             class="constell-block-title mt-mini">Позиции
+                                        </div>
+                                        <!--Positions table-->
+                                        <div ng-if="tenderEdit.addTenderModel.PositionList.length != 0" class="form-group">
+                                            <div class="table-wrapper table-main-p">
+                                                <table class="table table-bordered table-striped table-responsive">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <div class="th">
+                                                                Название
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div class="th">
+                                                                Объем
+                                                            </div>
+                                                        </th>
+                                                        <th>
+                                                            <div class="th">
+                                                                Мин. цена
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr data-ng-repeat="position in tenderEdit.addTenderModel.PositionList">
+                                                        <td class="left-align">{{position.title}}</td>
+                                                        <td>
+                                                            <div class="table-inner-input">
+                                                                <input class="form-control" ng-model="position.amount"
+                                                                       type="text">
+                                                                <span class="constell-unit">{{position.unit}}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="table-inner-input">
+                                                                <input class="form-control" ng-model="position.minPrice"
+                                                                       type="text">
+                                                                <span class="constell-unit">{{position.currency}}</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </uib-tab>
+                                    <uib-tab heading="Позиции">
+                                        <!--Category list-->
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-12">Категория</label>
+                                            <md-select ng-model="tenderEdit.addTenderModel.CategoryId"
+                                                       data-ng-disabled="true"
+                                                       placeholder="Выбрать">
+                                                <md-option ng-repeat="category in tenderEdit.categoryList.Result"
+                                                           value="{{category.id}}">
+                                                    {{category.title}}
+                                                </md-option>
+                                            </md-select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="" class="col-sm-12">Позиции</label>
+                                            <div class="col-sm-12 subheader-block">
+                                                <md-list>
+                                                    <md-subheader class="md-no-sticky">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <form>
+                                                                    <input type="text"
+                                                                           placeholder="Найти..."
+                                                                           class="form-control"
+                                                                           data-ng-model="searchKeywords">
+                                                                </form>
+                                                            </div>
+                                                            <div class="col-sm-8 controlls-btns">
+                                                                <button class="btn btn-primary">Все</button>
+                                                                <button class="btn btn-primary">Очистить</button>
+                                                            </div>
+                                                        </div>
+                                                    </md-subheader>
+                                                    <div class="md-list-container">
+                                                        <md-list-item
+                                                            ng-repeat="position in tenderEdit.positionsList.Result">
+                                                            <p> {{ position.title }} </p>
+                                                            <md-checkbox class="md-secondary"
+                                                                         ng-change="tender.setPosition(position.id, position.title, position.unit, position.currency)"
+                                                                         ng-true-value="{{position.id}}"
+                                                                         ng-model="position.checkbox"></md-checkbox>
+                                                        </md-list-item>
+                                                        <p class="text-center"
+                                                           ng-if="tender.positionsList.Result.length == 0">Позиции
+                                                            отсутствуют</p>
+                                                    </div>
+                                                </md-list>
+
+                                                <div ng-if="tender.positionsPreloader" class="constell-loader"></div>
+                                            </div>
+                                        </div>
+                                    </uib-tab>
+                                </uib-tabset>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

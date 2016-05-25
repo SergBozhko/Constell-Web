@@ -8,7 +8,8 @@
     angular.module('app.tenders')
         .controller('TendersCtrl', ['MainSettings', '$http', 'rest', 'Errors', TendersCtrl])
         .controller('TenderStatsCtrl', ['rest', '$stateParams', TenderStatsCtrl])
-        .controller('TendersAdd', ['rest', 'formSteps', 'addTenderModel', 'lodash', TendersAdd]);
+        .controller('TendersAdd', ['rest', 'formSteps', 'addTenderModel', 'lodash', TendersAdd])
+        .controller('TenderEdit', ['rest', '$stateParams', 'addTenderModel', 'lodash', TenderEdit]);
 
     // Tenders ctrl
     function TendersCtrl(MainSettings, $http, rest, Errors) {
@@ -344,6 +345,14 @@
         self.addTender = addTender;
         // Add tender model obj
         self.addTenderModel = addTenderModel;
+        // Reset fields
+        for(var field in self.addTenderModel) {
+            if (self.addTenderModel.hasOwnProperty(field)) {
+                console.log(field);
+                self.addTenderModel[field] = null;
+            }
+        }
+
         // Init date
         var dateToday = new Date();
         self.addTenderModel.StartDate = new Date();
@@ -409,6 +418,68 @@
         function addTender() {
             console.log('Отсылаю ', self.addTenderModel);
             rest.save({customUrl: 'Tender/SaveTender'}, self.addTenderModel);
+        }
+
+    }
+
+    // Tender Edit
+    function TenderEdit(rest, $stateParams, addTenderModel, lodash) {
+
+        var self = this;
+
+        // Init functions
+        self.open = open;
+        self.setDate = setDate;
+
+        // Add tender model
+        self.addTenderModel = addTenderModel;
+
+
+        // Get tender init
+        self.tenderToEdit = rest.get({customUrl: 'Tender/GetTender/', id: $stateParams.tenderToEdit});
+        self.tenderToEdit.$promise.then(function (response) {
+            console.log('Tender to edit: ', response);
+
+            self.positionsList = rest.get({
+                customUrl: 'Position/GetPositions',
+                categoryId: response.CategoryId
+            });
+
+            // Update add tender model
+            self.addTenderModel.Title = response.title;
+            self.addTenderModel.StartDate = response.startTime;
+            self.addTenderModel.EndDate = response.endTime;
+            self.addTenderModel.isActive = response.isActive;
+            self.addTenderModel.ForCertificed = response.ForCertificed;
+            self.addTenderModel.IsOpenTender = response.isOpenTender;
+            self.addTenderModel.CategoryId = response.categoryId;
+
+            // Positions
+            self.positionsList = rest.get({
+                customUrl: 'Position/GetPositions',
+                categoryId: self.addTenderModel.CategoryId
+            });
+            self.positionsList.$promise.then(function(response) {
+                self.addTenderModel.PositionList = response.Result;
+            });
+
+        });
+
+        // Categories
+        self.categoryList = rest.get({customUrl: 'Tender/GetCategories'});
+
+
+        // Date picker
+        self.status = {
+            startDate: false,
+            endDate: false
+        };
+        function open(datePicker) {
+            self.status[datePicker] = true;
+        }
+
+        function setDate(year, month, day) {
+            self.dt = new Date(year, month, day);
         }
 
     }
