@@ -1,1 +1,123 @@
-Position edit
+<!--Tenders add page-->
+<div class="page page-table">
+
+    <section class="tender-add-container constell-wizard-form constell-form-wrapper">
+
+        <div class="row ui-section">
+            <div class="col-lg-8 clearfix">
+                <h2 class="section-header">Редактировать позицию <a ui-sref="positions" class="btn btn-primary">К списку
+                    позиций</a></h2>
+            </div>
+            <div class="col-md-12">
+                <section class="panel panel-default">
+                    <div class="panel-body">
+
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <!--Add posiotion form-->
+                                <form action="" class="form-horizontal position-edit" name="editPosition">
+
+                                    <div class="constell-block-title mt-mini">Выберите категорию</div>
+                                    <!--Category list-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Категория</label>
+                                        <md-select ng-model="positionEdit.positionAddObj.CategoryId"
+                                                   placeholder="Выбрать" ng-disabled="true">
+                                            <md-option ng-repeat="category in positionEdit.posCategory.Result"
+                                                       value="{{category.id}}">
+                                                {{category.title}}
+                                            </md-option>
+                                        </md-select>
+                                    </div>
+
+                                    <div class="constell-block-title mt-mini">Информация о позиции</div>
+                                    <!--Position name-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Название позиции</label>
+                                        <div class="col-sm-12">
+                                            <input ng-model="positionEdit.positionAddObj.Title" type="text"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <!--Position place-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Место поставки</label>
+                                        <md-select ng-model="positionEdit.positionAddObj.MaterialPlace"
+                                                   placeholder="Выбрать">
+                                            <md-option ng-repeat="factory in positionEdit.posFactories"
+                                                       value="{{factory.id}}">
+                                                {{factory.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </div>
+
+                                    <!--Position terms-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Сроки поставки</label>
+                                        <div class="col-sm-12">
+                                            <textarea name=""
+                                                      placeholder="По договоренности, на основании согласованных заявок"
+                                                      ng-model="positionEdit.positionAddObj.MaterialTerms"
+                                                      class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!--Position conditions-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Условия поставки</label>
+                                        <div class="col-sm-12">
+                                            <textarea name=""
+                                                      placeholder="По договоренности, на основании согласованных заявок"
+                                                      ng-model="positionEdit.positionAddObj.MaterialConditions"
+                                                      class="form-control" rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <!--Position unit-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Единица измерения</label>
+                                        <md-select ng-model="positionEdit.positionAddObj.Unit"
+                                                   placeholder="Выбрать">
+                                            <md-option ng-repeat="unit in positionEdit.posUnits"
+                                                       value="{{unit.id}}">
+                                                {{unit.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </div>
+
+                                    <!--Position Currency-->
+                                    <div class="form-group">
+                                        <label for="" class="col-sm-12">Валюта</label>
+                                        <md-select ng-model="positionEdit.positionAddObj.Currency"
+                                                   placeholder="Выбрать">
+                                            <md-option ng-repeat="currency in positionEdit.posCurrencys"
+                                                       value="{{currency.id}}">
+                                                {{currency.name}}
+                                            </md-option>
+                                        </md-select>
+                                    </div>
+
+                                    <!--Position parametries-->
+                                    <div class="constell-block-title mt-mini mt-30">Определяющие параметры позиции</div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <div text-angular ng-model="positionEdit.positionAddObj.MaterialParametrs"
+                                                 class="ui-editor"></div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                                <button ng-click="positionEdit.savePosition()" class="btn btn-primary">Сохранить
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+
+</div>

@@ -8,12 +8,12 @@
     angular.module('app.positions')
         .factory('positionAddObj', positionAddObj);
 
+    // Main position add object
     function positionAddObj() {
         var positionAddObj;
 
         positionAddObj = {
             Title: '',
-            Contacts: '',
             MaterialParametrs: '',
             MaterialPlace: '',
             MaterialTerms: '',

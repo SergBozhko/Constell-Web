@@ -30,7 +30,7 @@
         /* ====================
          RELEASE MODE
          ==================== */
-        releaseMode: false,
+        releaseMode: true,
 
         // Url's
         serverDirect: function() {

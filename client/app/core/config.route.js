@@ -77,6 +77,12 @@
                 });
 
                 // Positions
+                $stateProvider.state('positions', {
+                    url: '/positions',
+                    templateUrl: 'app/positions/positions.html',
+                    controller: 'PositionsCtrl',
+                    controllerAs: 'positions'
+                });
                 $stateProvider.state('positionAdd', {
                     url: '/positions/add/',
                     templateUrl: 'app/positions/position.add.html',
@@ -84,7 +90,7 @@
                     controllerAs: 'positionAdd'
                 });
                 $stateProvider.state('positionEdit', {
-                    url: '/positions/edit/',
+                    url: '/positions/edit/:positionId',
                     templateUrl: 'app/positions/position.edit.html',
                     controller: 'PositionsEdit',
                     controllerAs: 'positionEdit'
