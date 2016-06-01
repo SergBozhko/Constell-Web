@@ -2,24 +2,79 @@
  * Created by admin on 05.05.16.
  */
 
-(function() {
+(function () {
 
     'use strict';
 
     angular.module('app.users')
-        .controller('UsersCtrl', ['MainSettings', 'rest', UsersCtrl]);
+        .controller('UsersCtrl', ['tCtrl', 'MainSettings', 'rest', UsersCtrl]);
 
-    function UsersCtrl(MainSettings, rest) {
+    function UsersCtrl(tCtrl, MainSettings, rest) {
 
         var self = this;
 
-        // get users list
-        self.list = rest.get({customUrl: 'User/GetUsers'});
+        self.userCnfg = {
+            customUrl: 'User/GetUsers',
+            Page: 1,
+            PerPage: 15,
+            SearchName: 'company'
+        };
+        self.preloader = true;
 
-        self.list.$promise.then(function(response) {
-            console.log(response);
-        });
+        // Get users
+        self.getUsers = getUsers;
+        self.orderList = orderList;
+        self.search = search;
+        self.searchWasChanged = searchWasChanged;
+        self.clearSearch = clearSearch;
 
+        function getUsers() {
+            self.preloader = true;
+
+            self.list = tCtrl.getElements(self.userCnfg);
+            self.list.$promise.then(function () {
+                self.preloader = false;
+            });
+        }
+
+        function orderList(orderField) {
+
+            tCtrl.order(self.userCnfg, orderField);
+            getUsers();
+
+        }
+
+
+        // Search
+        var changed = false;
+
+        function search() {
+
+            if (changed) {
+                getUsers();
+
+                changed = false;
+            }
+
+        }
+
+        // Search was changed
+        function searchWasChanged() {
+            changed = true;
+        }
+
+        function clearSearch() {
+
+            if (self.userCnfg.Search != '') {
+                self.userCnfg.Search = '';
+                searchWasChanged();
+                search();
+            }
+
+        }
+
+        // Init get users
+        getUsers();
 
     }
 

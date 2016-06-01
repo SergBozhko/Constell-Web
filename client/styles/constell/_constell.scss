@@ -53,12 +53,26 @@
         margin: 0 15px;
     }
 
+    .btn-group .dropdown-menu {
+        left: auto;
+        right: 0;
+
+        span {
+            display: block;
+            padding: 5px 15px;
+
+            &:hover {
+                background-color: $brand-danger;
+                color: #fff;
+            }
+        }
+    }
+
     // Table styles
     .table > thead > tr > th {
         padding: 0;
     }
     .table-striped > tbody > tr:nth-of-type(odd) {
-        //background-color: rgba(66, 139, 202, 0.1);
         background-color: rgba(193, 193, 193, 0.1);
     }
     .table tbody tr td {
@@ -112,6 +126,74 @@
         color: #000 !important;
     }
 
+    .table-order-wrapper {
+        position: relative;
+
+        i {
+            position: absolute;
+            right: -12px;
+            font-size: 18px;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+    }
+
+}
+.search-form {
+    position: relative;
+
+    .form-control {
+        padding-right: 30px;
+        font-weight: normal;
+    }
+
+    &:hover .clear-search {
+        opacity: 1;
+    }
+
+    .clear-search {
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 30px;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity .2s ease;
+
+        &:hover .zmdi {
+            opacity: 1;
+        }
+
+        .zmdi {
+            margin: 0 auto;
+            opacity: 0.7;
+            transition: opacity .2s ease;
+            color: #3D4051 !important;
+        }
+    }
+}
+.constell-open-row {
+    @include transition();
+    &:hover {
+        background-color: rgba(66, 139, 202, 0.1) !important;
+    }
+}
+.constell-open-row.active, .constell-open-row.active td {
+    background-color: rgba(66, 139, 202, .05) !important;
+}
+.constell-group-row {
+    .constell-group-row-inner {
+        padding: 15px 15px 0 15px !important;
+    }
+}
+.constell-open-icon {
+    padding: 0 !important;
+    color: $brand-primary !important;
+    font-size: 24px !important;
 }
 
 .table-inner-input {
@@ -172,4 +254,8 @@
     &:hover {
         background-color: #3071a9;
     }
+}
+md-select-menu.md-default-theme md-option[selected],
+md-select-menu md-option[selected] {
+    color: $brand-primary !important;
 }

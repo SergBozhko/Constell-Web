@@ -2,9 +2,11 @@
 .mt-10 {
     margin-top: 10px !important;
 }
+
 .mt-20 {
     margin-top: 20px !important;
 }
+
 .mt-30 {
     margin-top: 30px !important;
 }
@@ -17,6 +19,7 @@
         margin-bottom: 0;
     }
 }
+
 // Checkbox
 md-checkbox.md-checked .md-icon {
     background-color: $brand-primary;
@@ -28,15 +31,18 @@ md-switch.md-checked.md-primary .md-ink-ripple {
     background-color: $brand-primary !important;
     color: $brand-primary !important;
 }
+
 md-switch.md-checked.md-primary .md-bar {
     background-color: rgb(102, 168, 226);
 }
-.switch-row  {
+
+.switch-row {
     margin-bottom: 15px;
     md-switch {
         margin: 0;
     }
 }
+
 .switch-row label {
     margin: 6px 0;
 }
@@ -50,7 +56,13 @@ md-switch.md-checked.md-primary .md-bar {
     border: 2px solid #fff;
     border-top: 2px solid $brand-primary;
     animation: constell-preloader .5s linear infinite;
+
+    &.cl-block {
+        position: static;
+        margin: 0 auto;
+    }
 }
+
 @keyframes constell-preloader {
     0% {
         transform: rotate(0deg);
@@ -80,5 +92,23 @@ md-switch.md-checked.md-primary .md-bar {
     top: 100px;
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
+}
+
+// Confirm window modal
+a.md-button.md-default-theme.md-primary,
+a.md-button.md-primary, .md-button.md-default-theme.md-primary,
+.md-button.md-primary {
+    color: $brand-primary;
+}
+
+// Header hover buttons
+a.md-button.md-default-theme:not([disabled]):hover,
+a.md-button:not([disabled]):hover, .md-button.md-default-theme:not([disabled]):hover,
+.md-button:not([disabled]):hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.header-container > .top-header .top-nav .nav-left > li,
+.header-container > .top-header .top-nav .nav-right > li > a{
+    border: none;
 }
 

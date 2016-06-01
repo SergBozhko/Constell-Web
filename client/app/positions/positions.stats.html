@@ -4,9 +4,9 @@
     <div class="row ui-section">
         <div class="col-lg-12 clearfix">
             <h2 class="section-header">
-                {{tender.info.title}}
-                <a href="#/tenders/edit/{{tender.info.id}}" class="btn btn-primary">Редактировать</a>
-                <a ui-sref="tenders" class="btn btn-primary">К списку тендеров</a>
+                {{position.info.title}}
+                <a href="#/positions/edit/{{position.info.id}}" class="btn btn-primary">Редактировать</a>
+                <a ui-sref="positions" class="btn btn-primary">К списку позиций</a>
             </h2>
         </div>
         <div class="col-md-12">
@@ -68,21 +68,14 @@
                             <div class="panel-body">
                                 <span class="panel-label">Информация</span>
                                 <ul class="list-group no-margin">
-                                    <li class="list-group-item">{{tender.info.title}}</li>
-                                    <li class="list-group-item"><b>Категория: </b>{{tender.info.category}}</li>
+                                    <li class="list-group-item">{{position.info.title}}</li>
+                                    <li class="list-group-item"><b>ID: </b> {{position.info.id}}</li>
+                                    <li class="list-group-item"><b>Категория: </b>{{position.info.category.name}}</li>
                                     <li class="list-group-item">
-                                        <b>Минимальное предложение: </b>
-                                        <span ng-if="tender.info.minPrice == null">отсутствует</span>
-                                        <span ng-if="tender.info.minPrice != null">{{tender.info.minPrice}} руб.</span>
-
+                                        <b>Единица измерения: </b> {{position.info.unit.name}}
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Статус тендера: </b>
-                                        <span ng-if="tender.info.isOpenTender">открыт</span>
-                                        <span ng-if="!tender.info.isOpenTender">закрыт</span>
-                                    </li>
-                                    <li class="list-group-item" ng-if="tender.info.isOpenTender">
-                                        <b>Дата начала: </b> {{tender.info.startTime}}
+                                        <b>Валюта: </b> {{position.info.currency.name}}
                                     </li>
                                 </ul>
                             </div>
@@ -99,16 +92,18 @@
                 <div class="table-filters">
                     <div class="row">
                         <div class="col-sm-4 col-xs-6">
-                            <form ng-submit="tender.search()" class="search-form">
+                            <form>
                                 <input type="text"
                                        placeholder="Найти..."
                                        class="form-control"
-                                       data-ng-model="tender.tenderOffCnfg.Search"
-                                       ng-change="tender.searchWasChanged()"
-                                       ng-blur="tender.search()">
-                                <div ng-click="tender.clearSearch()" class="clear-search"><i
-                                    class="zmdi zmdi-close"></i></div>
+                                       data-ng-model="searchKeywords"
+                                       data-ng-keyup="search()">
                             </form>
+                        </div>
+                        <div class="col-sm-3 col-xs-6 filter-result-info">
+                <span>
+                Showing {{filteredStores.length}}/{{stores.length}} entries
+                </span>
                         </div>
                     </div>
                 </div>
@@ -123,86 +118,50 @@
                                 </div>
                             </th>
                             <th>
-                                <div class="th" ng-click="tender.orderList('userId')">
-                                    <span class="table-order-wrapper">
-                                        ID
-                                        <i ng-if="tender.tenderOffCnfg.OrderByInfo.target == 'userId'"
-                                           class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : tender.tenderOffCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : tender.tenderOffCnfg.OrderByInfo.course == 'asc'}"></i>
-                                    </span>
+                                <div class="th">
+                                    ID
                                 </div>
                             </th>
                             <th>
-                                <div class="th" ng-click="tender.orderList('userName')">
-                                    <span class="table-order-wrapper">
-                                        Имя
-                                        <i ng-if="tender.tenderOffCnfg.OrderByInfo.target == 'userName'"
-                                           class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : tender.tenderOffCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : tender.tenderOffCnfg.OrderByInfo.course == 'asc'}"></i>
-                                    </span>
+                                <div class="th">
+                                    Имя
                                 </div>
                             </th>
                             <th>
-                                <div class="th" ng-click="tender.orderList('price')">
-                                    <span class="table-order-wrapper">
-                                        Цена (руб)
-                                        <i ng-if="tender.tenderOffCnfg.OrderByInfo.target == 'price'"
-                                           class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : tender.tenderOffCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : tender.tenderOffCnfg.OrderByInfo.course == 'asc'}"></i>
-                                    </span>
+                                <div class="th">
+                                    Цена (руб)
                                 </div>
                             </th>
                             <th>
-                                <div class="th" ng-click="tender.orderList('dateStr')">
-                                    <span class="table-order-wrapper">
-                                        Дата
-                                        <i ng-if="tender.tenderOffCnfg.OrderByInfo.target == 'dateStr'"
-                                           class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : tender.tenderOffCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : tender.tenderOffCnfg.OrderByInfo.course == 'asc'}"></i>
-                                    </span>
+                                <div class="th">
+                                    Дата
                                 </div>
                             </th>
                             <th>
-                                <div class="th" ng-click="tender.orderList('comments')">
-                                    <span class="table-order-wrapper">
-                                        Комментарии
-                                        <i ng-if="tender.tenderOffCnfg.OrderByInfo.target == 'comments'"
-                                           class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : tender.tenderOffCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : tender.tenderOffCnfg.OrderByInfo.course == 'asc'}"></i>
-                                    </span>
+                                <div class="th">
+                                    Комментарии
                                 </div>
                             </th>
                             <th>
-                                <div class="th" ng-click="tender.orderList('isCertified')">
-                                    <span class="table-order-wrapper">
-                                        Проверенный
-                                        <i ng-if="tender.tenderOffCnfg.OrderByInfo.target == 'isCertified'"
-                                           class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : tender.tenderOffCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : tender.tenderOffCnfg.OrderByInfo.course == 'asc'}"></i>
-                                    </span>
+                                <div class="th">
+                                    Проверенный
                                 </div>
                             </th>
                         </tr>
                         </thead>
-                        <tbody offer-group data-ng-repeat="offer in tender.infoOffers.Result">
+                        <tbody offer-group data-ng-repeat="tender in tender.info.offers">
                         <tr ng-click="open()" class="constell-open-row" ng-class="{'active' : opened}">
                             <td class="constell-open-icon">
                                 <i ng-if="!opened" class="zmdi zmdi-caret-right"></i>
                                 <i ng-if="opened" class="zmdi zmdi-caret-down"></i>
                             </td>
-                            <td>{{offer.userId}}</td>
-                            <td>{{offer.userName}}</td>
-                            <td>{{offer.price}}</td>
-                            <td>{{offer.dateStr}}</td>
-                            <td>{{offer.comments}}</td>
+                            <td>{{tender.userId}}</td>
+                            <td>{{tender.userName}}</td>
+                            <td>{{tender.price}}</td>
+                            <td>{{tender.dateStr}}</td>
+                            <td>{{tender.comments}}</td>
                             <td>
-                                <md-checkbox ng-model="offer.isCertified" data-ng-disabled="true"> {{ checkbox.cb1 }}
+                                <md-checkbox ng-model="tender.isCertified" data-ng-disabled="true"> {{ checkbox.cb1 }}
                                 </md-checkbox>
                             </td>
                         </tr>
@@ -239,7 +198,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="children in offer.childrens">
+                                    <tr ng-repeat="children in tender.childrens">
                                         <td>{{children.id}}</td>
                                         <td>{{children.positionTitle}}</td>
                                         <td>{{children.price}}</td>
@@ -250,16 +209,6 @@
                                 </table>
                             </td>
                         </tr>
-                        <tr ng-if="tender.preloaderOffers">
-                            <td colspan="7">
-                                <div class="constell-loader cl-block"></div>
-                            </td>
-                        </tr>
-                        <tr ng-if="tender.infoOffers.Result.length == 0">
-                            <td colspan="7">
-                                Предложений нет
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -267,14 +216,22 @@
                 <footer class="table-footer">
                     <div class="row">
                         <div class="col-md-6 page-num-info">
+                <span>
+                Show
+                <select data-ng-model="numPerPage"
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNumPerPageChange()">
+                </select>
+                entries per page
+                </span>
                         </div>
                         <div class="col-md-6 text-right pagination-container">
                             <uib-pagination class="pagination-sm"
-                                            ng-model="tender.tenderOffCnfg.Page"
-                                            total-items="tender.tenderOffCnfg.totalCount"
+                                            ng-model="currentPage"
+                                            total-items="tenders.list.TotalItemsCount"
                                             max-size="4"
-                                            ng-change="tender.getTenderOffers()"
-                                            items-per-page="tender.tenderOffCnfg.PerPage"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="10"
                                             rotate="false"
                                             previous-text="Назад" next-text="Далее"
                                             boundary-links="false"></uib-pagination>

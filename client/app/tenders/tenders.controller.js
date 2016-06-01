@@ -6,21 +6,24 @@
     'use strict';
 
     angular.module('app.tenders')
-        .controller('TendersCtrl', ['MainSettings', '$http', 'rest', 'Errors', TendersCtrl])
-        .controller('TenderStatsCtrl', ['rest', '$stateParams', TenderStatsCtrl])
-        .controller('TendersAdd', ['rest', 'formSteps', 'addTenderModel', 'lodash', TendersAdd])
-        .controller('TenderEdit', ['rest', '$stateParams', 'addTenderModel', 'lodash', TenderEdit]);
+        .controller('TendersCtrl', ['tCtrl', 'rest', '$mdDialog', 'MainSettings', TendersCtrl])
+        .controller('TenderStatsCtrl', ['tCtrl', 'rest', '$stateParams', TenderStatsCtrl])
+        .controller('TendersAdd', ['tCtrl', 'rest', 'formSteps', 'addTenderModel', 'lodash', 'MessageInfo', '$state', TendersAdd])
+        .controller('TenderEdit', ['tCtrl', 'rest', '$stateParams', 'addTenderModel', 'MessageInfo', 'lodash', TenderEdit]);
 
     // Tenders ctrl
-    function TendersCtrl(MainSettings, $http, rest, Errors) {
+    function TendersCtrl(tCtrl, rest, $mdDialog, MainSettings) {
 
         var self = this;
         /**
          * Tenders init functions
          */
         self.getTenders = getTenders;
+        self.deleteTender = deleteTender;
         self.orderList = orderList;
-
+        self.search = search;
+        self.searchWasChanged = searchWasChanged;
+        self.clearSearch = clearSearch;
 
         /**
          * @type {{customUrl: string, Page: number, PerPage: number}}
@@ -29,46 +32,79 @@
         self.tenderCnfg = {
             customUrl: 'Tender/GetTenders',
             Page: 1,
-            PerPage: 15
+            PerPage: 15,
+            SearchName: 'title'
         };
+        self.preloader = true;
 
-        /**
-         * Get tender list
-         */
-        // TODO: Check only self.tenderCnfg sending into self.list
         function getTenders() {
+            self.preloader = true;
 
-            console.log('Высылаю ', self.tenderCnfg);
-
-            self.list = rest.save(MainSettings.serverDirect() + '/api/' + self.tenderCnfg.customUrl, self.tenderCnfg);
-
-
-            self.list.$promise.then(function (response) {
-                self.tenderCnfg.totalCount = response.TotalItemsCount;
-                console.log(self.tenderCnfg.customUrl, ': ', response);
+            self.list = tCtrl.getElements(self.tenderCnfg);
+            self.list.$promise.then(function () {
+                self.preloader = false;
             });
+        }
+
+        function orderList(orderField) {
+
+            tCtrl.order(self.tenderCnfg, orderField);
+            getTenders();
 
         }
 
-        /**
-         * @param {string} orderField Obj to sort
-         * @param {string} orderBy Sort type
-         * Description:
-         * Sort function
-         */
-        function orderList(orderField, orderBy) {
-            // OrderBy
-            self.tenderCnfg.OrderBy = [];
-            self.tenderCnfg.OrderBy.push({
-                course: orderBy,
-                target: orderField
-            });
+        // Delete tender
+        function deleteTender(tenderId, tenderName) {
+
+            rest.save({customUrl: 'Tender/DelTender', tenderId: tenderId});
+
+            console.log(tenderName + ' был удален');
 
             getTenders();
         }
 
-        getTenders();
+        self.showConfirm = function (ev, tenderId, tender) {
+            var confirm = $mdDialog.confirm()
+                .title('Вы действительно хотите удалить "' + tender + '"?')
+                .content('')
+                .ariaLabel('Удаление')
+                .targetEvent(ev)
+                .ok('Да')
+                .cancel('Отменить');
+            $mdDialog.show(confirm).then(function () {
+                deleteTender(tenderId, tender);
+            });
+        };
 
+        // Search
+        var changed = false;
+
+        function search() {
+
+            if (changed) {
+                getTenders();
+
+                changed = false;
+            }
+
+        }
+
+        // Search was changed
+        function searchWasChanged() {
+            changed = true;
+        }
+
+        function clearSearch() {
+
+            if (self.tenderCnfg.Search != '' && self.tenderCnfg.Search != null) {
+                self.tenderCnfg.Search = '';
+                searchWasChanged();
+                search();
+            }
+
+        }
+
+        getTenders();
 
         // Traffic chart
         self.graph = rest.get({customUrl: 'Tender/GetGraphOfTanders'});
@@ -179,14 +215,23 @@
     }
 
     // Tender ctrl
-    function TenderStatsCtrl(rest, $stateParams) {
+    function TenderStatsCtrl(tCtrl, rest, $stateParams) {
 
         var self = this;
 
+        // Init functions
+        self.getTenderOffers = getTenderOffers;
+        self.orderList = orderList;
+        self.search = search;
+        self.searchWasChanged = searchWasChanged;
+        self.clearSearch = clearSearch;
+
         // Get best offers
+        self.offersPreloader = true;
         self.offers = rest.get({customUrl: 'Tender/GetBestOffers', tenderId: $stateParams.tender});
 
         self.offers.$promise.then(function (response) {
+            self.offersPreloader = false;
             console.log('Tender/GetBestOffers ', response);
         });
 
@@ -196,6 +241,67 @@
         self.info.$promise.then(function (response) {
             console.log('Tender/GetTender (Info about tender)', response);
         });
+
+
+
+        // ======== Info about offers ========
+        self.tenderOffCnfg = {
+            customUrl: 'Tender/GetOffersForTander',
+            tenderId: $stateParams.tender,
+            Page: 1,
+            PerPage: 10,
+            SearchName: 'userName'
+        };
+        self.preloaderOffers = true;
+
+        function getTenderOffers() {
+            self.preloaderOffers = true;
+
+            self.infoOffers = tCtrl.getElements(self.tenderOffCnfg);
+            self.infoOffers.$promise.then(function () {
+                self.preloaderOffers = false;
+            });
+        }
+
+        function orderList(orderField) {
+
+            tCtrl.order(self.tenderOffCnfg, orderField);
+            getTenderOffers();
+
+        }
+
+        getTenderOffers();
+
+        // ======== END Info about offers ========
+
+        // Search
+        var changed = false;
+
+        function search() {
+
+            if (changed) {
+                getTenderOffers();
+
+                changed = false;
+            }
+
+        }
+
+        // Search was changed
+        function searchWasChanged() {
+            changed = true;
+        }
+
+        function clearSearch() {
+
+            if (self.tenderOffCnfg.Search != '' && self.tenderOffCnfg.Search != null) {
+                self.tenderOffCnfg.Search = '';
+                searchWasChanged();
+                search();
+            }
+
+        }
+
 
         // Tender stats
         self.stats = rest.get({customUrl: 'Tender/GetDataOfGraphForTender', tenderId: $stateParams.tender});
@@ -221,6 +327,7 @@
                         var date = new Date(params.value[0]);
 
                         return 'Имя: ' + params.value[3] + '<br>'
+                            + 'Позиция: ' + params.value[4] + '<br>'
                             + 'Цена: ' + params.value[2] + ' руб<br>'
                             + 'Дата: ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
                     }
@@ -305,7 +412,7 @@
     }
 
     // Tender add
-    function TendersAdd(rest, formSteps, addTenderModel, lodash) {
+    function TendersAdd(tCtrl, rest, formSteps, addTenderModel, lodash, MessageInfo, $state) {
 
         var self = this;
 
@@ -345,13 +452,14 @@
         self.addTender = addTender;
         // Add tender model obj
         self.addTenderModel = addTenderModel;
+
         // Reset fields
-        for(var field in self.addTenderModel) {
+        for (var field in self.addTenderModel) {
             if (self.addTenderModel.hasOwnProperty(field)) {
-                console.log(field);
                 self.addTenderModel[field] = null;
             }
         }
+        self.addTenderModel.IsActive = true;
 
         // Init date
         var dateToday = new Date();
@@ -361,18 +469,33 @@
 
         self.categoryList = rest.get({customUrl: 'Tender/GetCategories'});
 
+        self.positionCnfg = {
+            customUrl: 'Position/GetPositions',
+            categoryId: null,
+            SearchName: 'title'
+        };
+
+        // Get positions
         function getPositions() {
             self.positionsPreloader = true;
             self.addTenderModel.PositionList = [];
-            self.positionsList = rest.get({
-                customUrl: 'Position/GetPositions',
-                categoryId: self.addTenderModel.CategoryId
-            });
 
+            self.positionsList = tCtrl.getElements(self.positionCnfg);
             self.positionsList.$promise.then(function (response) {
                 self.positionsPreloader = false;
 
-                console.log('Position/GetPositions (Позиции)', response);
+                response.Result.forEach(function (item) {
+                    item.selected = false;
+                });
+
+                self.clearList = clearList;
+                // Clear list function
+                function clearList() {
+                    self.addTenderModel.PositionList = [];
+                    response.Result.forEach(function (item) {
+                        item.selected = false;
+                    });
+                }
             });
         }
 
@@ -402,7 +525,8 @@
                     amount: null,
                     minPrice: null,
                     unit: unit,
-                    currency: currency
+                    currency: currency,
+                    selected: true
                 },
                 posIndex = lodash.findIndex(self.addTenderModel.PositionList, setPosObj);
 
@@ -414,16 +538,23 @@
 
         }
 
+
         // Save tender
         function addTender() {
             console.log('Отсылаю ', self.addTenderModel);
-            rest.save({customUrl: 'Tender/SaveTender'}, self.addTenderModel);
+            rest.save({customUrl: 'Tender/SaveTender'}, self.addTenderModel, function (response) {
+
+                MessageInfo.show('Тендер успешно добавлен!');
+
+                $state.go('tenders');
+
+            });
         }
 
     }
 
     // Tender Edit
-    function TenderEdit(rest, $stateParams, addTenderModel, lodash) {
+    function TenderEdit(tCtrl, rest, $stateParams, addTenderModel, MessageInfo, lodash) {
 
         var self = this;
 
@@ -440,12 +571,8 @@
         self.tenderToEdit.$promise.then(function (response) {
             console.log('Tender to edit: ', response);
 
-            self.positionsList = rest.get({
-                customUrl: 'Position/GetPositions',
-                categoryId: response.CategoryId
-            });
-
             // Update add tender model
+            self.addTenderModel.Id = response.id;
             self.addTenderModel.Title = response.title;
             self.addTenderModel.StartDate = response.startTime;
             self.addTenderModel.EndDate = response.endTime;
@@ -453,15 +580,70 @@
             self.addTenderModel.ForCertificed = response.ForCertificed;
             self.addTenderModel.IsOpenTender = response.isOpenTender;
             self.addTenderModel.CategoryId = response.categoryId;
+            response.positions.forEach(function(item) {
+                self.addTenderModel.PositionList.push({
+                    id: item.id,
+                    title: item.title,
+                    currency: item.currency,
+                    unit: item.unit
+                });
+            });
 
-            // Positions
-            self.positionsList = rest.get({
+            // Get positions
+            self.positionsPreloader = true;
+            self.positionCnfg = {
                 customUrl: 'Position/GetPositions',
-                categoryId: self.addTenderModel.CategoryId
+                categoryId: self.addTenderModel.CategoryId,
+                SearchName: 'title'
+            };
+            self.positionsList = tCtrl.getElements(self.positionCnfg);
+            self.positionsList.$promise.then(function (response) {
+                self.positionsPreloader = false;
+
+                self.addTenderModel.PositionList.forEach(function(item) {
+
+                    var findIndex = lodash.findIndex(response.Result, {'id': item.id});
+                    if(findIndex != -1) {
+                        response.Result[findIndex].selected = item.id;
+                    }
+                });
             });
-            self.positionsList.$promise.then(function(response) {
-                self.addTenderModel.PositionList = response.Result;
-            });
+
+            // Set position
+            self.setPosition = function(id, title, unit, currency) {
+
+                var addObj = {
+                    id: id,
+                    title: title,
+                    amount: null,
+                    minPrice: null,
+                    unit: unit,
+                    currency: currency
+                },
+                findIndex = lodash.findIndex(self.addTenderModel.PositionList, {'id': id});
+
+                if (findIndex != -1) {
+                    self.addTenderModel.PositionList.splice(findIndex, 1);
+                } else {
+                    self.addTenderModel.PositionList.push(addObj);
+                }
+
+                console.log(findIndex);
+
+            };
+
+            // Update tender
+            self.updatePreloader = false;
+            self.updateTender = function() {
+                self.updatePreloader = true;
+
+                console.log('Обновляю тендер ', self.addTenderModel);
+                rest.save({customUrl: 'Tender/SaveTender'}, self.addTenderModel, function (response) {
+
+                    MessageInfo.show('Изменения успешно сохранены');
+
+                });
+            }
 
         });
 

@@ -83,6 +83,12 @@
                     controller: 'PositionsCtrl',
                     controllerAs: 'positions'
                 });
+                $stateProvider.state('positionsStats', {
+                    url: '/positions/:positionId',
+                    templateUrl: 'app/positions/positions.stats.html',
+                    controller: 'PositionsStatsCtrl',
+                    controllerAs: 'position'
+                });
                 $stateProvider.state('positionAdd', {
                     url: '/positions/add/',
                     templateUrl: 'app/positions/position.add.html',

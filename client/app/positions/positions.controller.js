@@ -6,16 +6,22 @@
     'use strict';
 
     angular.module('app.positions')
-        .controller('PositionsCtrl', ['rest', 'MainSettings', PositionsCtrl])
-        .controller('PositionsAdd', ['rest', 'positionAddObj', PositionsAdd])
-        .controller('PositionsEdit', ['rest', 'positionAddObj', '$stateParams', PositionsEdit]);
+        .controller('PositionsCtrl', ['tCtrl', 'rest', '$mdDialog', PositionsCtrl])
+        .controller('PositionsStatsCtrl', ['tCtrl', 'rest', '$stateParams', PositionsStatsCtrl])
+        .controller('PositionsAdd', ['rest', 'positionAddObj', 'MessageInfo', '$state', PositionsAdd])
+        .controller('PositionsEdit', ['rest', 'positionAddObj', '$stateParams', 'MessageInfo', PositionsEdit]);
 
     // Main positions controller
-    function PositionsCtrl(rest, MainSettings) {
+    function PositionsCtrl(tCtrl, rest, $mdDialog) {
 
         var self = this;
 
         self.getPositions = getPositions;
+        self.orderList = orderList;
+        self.search = search;
+        self.searchWasChanged = searchWasChanged;
+        self.clearSearch = clearSearch;
+        self.deletePosition = deletePosition;
 
         self.categories = rest.get({customUrl: 'Tender/GetCategories'});
 
@@ -27,32 +33,103 @@
             customUrl: 'Position/GetPositions',
             categoryId: null,
             Page: 1,
-            PerPage: 5
+            PerPage: 10,
+            SearchName: 'title'
         };
+        self.preloader = true;
 
         /**
          * Get positions list
          */
         function getPositions() {
+            self.preloader = true;
 
-            console.log('Высылаю ', self.positionCnfg);
-
-            self.list = rest.save(MainSettings.serverDirect() + '/api/' + self.positionCnfg.customUrl + self.positionCnfg.categoryId, self.positionCnfg);
-
-
-            self.list.$promise.then(function (response) {
-                self.positionCnfg.totalCount = response.TotalItemsCount;
-                console.log(self.positionCnfg.customUrl, ': ', response);
+            self.list = tCtrl.getElements(self.positionCnfg);
+            self.list.$promise.then(function() {
+                self.preloader = false;
             });
 
         }
 
+        function orderList(orderField) {
+
+            tCtrl.order(self.positionCnfg, orderField);
+            getPositions();
+
+        }
+
+
+        // Search
+        var changed = false;
+
+        function search() {
+
+            if (changed) {
+                getPositions();
+
+                changed = false;
+            }
+
+        }
+
+        // Search was changed
+        function searchWasChanged() {
+            changed = true;
+        }
+
+        function clearSearch() {
+
+            if (self.positionCnfg.Search != '' && self.positionCnfg.Search != null) {
+                self.positionCnfg.Search = '';
+                searchWasChanged();
+                search();
+            }
+
+        }
+
+
+        // Delete positions
+        function deletePosition(positionId, positionName) {
+
+            rest.save({customUrl: 'Position/DelPosition', positionId: positionId});
+
+            console.log(positionName + ' был удален');
+
+            getPositions();
+        }
+
+        self.showConfirm = function (ev, positionId, positionName) {
+            var confirm = $mdDialog.confirm()
+                .title('Вы действительно хотите удалить "' + positionName + '"?')
+                .content('')
+                .ariaLabel('Удаление')
+                .targetEvent(ev)
+                .ok('Да')
+                .cancel('Отменить');
+            $mdDialog.show(confirm).then(function () {
+                deletePosition(positionId, positionName);
+            });
+        };
+
         getPositions();
     }
 
+    // Position stats
+    function PositionsStatsCtrl(tCtrl, rest, $stateParams) {
+
+        var self = this;
+
+        // Info about position
+        self.info = rest.get({customUrl: 'Position/GetPosition', positionId: $stateParams.positionId});
+
+        self.info.$promise.then(function (response) {
+            console.log('Position/GetPosition (Info about position)', response);
+        });
+
+    }
 
     // Position add
-    function PositionsAdd(rest, positionAddObj) {
+    function PositionsAdd(rest, positionAddObj, MessageInfo, $state) {
 
         var self = this;
 
@@ -85,14 +162,18 @@
                 self.positionAddObj.MaterialConditions = autoText;
             }
 
-            rest.save({customUrl: 'Position/SavePositions'}, self.positionAddObj);
+            rest.save({customUrl: 'Position/SavePositions'}, self.positionAddObj, function(response) {
+                MessageInfo.show('Позиция успешно добавлена!');
+
+                $state.go('positions');
+            });
 
             console.log('Сохраняю позицию: ', self.positionAddObj);
         }
     }
 
     // Position edit
-    function PositionsEdit(rest, positionAddObj, $stateParams) {
+    function PositionsEdit(rest, positionAddObj, $stateParams, MessageInfo) {
 
         var self = this;
 
@@ -138,7 +219,9 @@
                 self.positionAddObj.MaterialConditions = autoText;
             }
 
-            rest.save({customUrl: 'Position/SavePositions'}, self.positionAddObj);
+            rest.save({customUrl: 'Position/SavePositions'}, self.positionAddObj, function(response) {
+                MessageInfo.show('Позиция успешно сохранена!');
+            });
 
             console.log('Сохраняю позицию: ', self.positionAddObj);
         }

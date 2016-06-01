@@ -2,40 +2,24 @@
 <!--Category list-->
 <div class="form-group">
     <label for="" class="col-sm-12">Категория</label>
-    <md-select ng-model="tender.addTenderModel.CategoryId" data-ng-change="tender.getPositions()" placeholder="Выбрать">
+    <md-select ng-model="tender.positionCnfg.categoryId" data-ng-change="tender.getPositions()" placeholder="Выбрать">
         <md-option ng-repeat="category in tender.categoryList.Result" value="{{category.id}}">
             {{category.title}}
         </md-option>
     </md-select>
 </div>
 
-<div ng-if="tender.addTenderModel.CategoryId != null" class="form-group">
+<div ng-if="tender.positionCnfg.categoryId != null" class="form-group">
     <label for="" class="col-sm-12">Позиции</label>
     <div class="col-sm-12 subheader-block">
         <md-list>
-            <md-subheader class="md-no-sticky">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <form>
-                            <input type="text"
-                                   placeholder="Найти..."
-                                   class="form-control"
-                                   data-ng-model="searchKeywords">
-                        </form>
-                    </div>
-                    <div class="col-sm-8 controlls-btns">
-                        <button class="btn btn-primary">Все</button>
-                        <button class="btn btn-primary">Очистить</button>
-                    </div>
-                </div>
-            </md-subheader>
             <div ng-if="!tender.positionsPreloader" class="md-list-container">
                 <md-list-item ng-repeat="position in tender.positionsList.Result">
                     <p> {{ position.title }} </p>
                     <md-checkbox class="md-secondary"
                                  ng-change="tender.setPosition(position.id, position.title, position.unit, position.currency)"
                                  ng-true-value="{{position.id}}"
-                                 ng-model="position.checkbox"></md-checkbox>
+                                 ng-model="position.selected"></md-checkbox>
                 </md-list-item>
                 <p class="text-center" ng-if="tender.positionsList.Result.length == 0">Позиции отсутствуют</p>
             </div>

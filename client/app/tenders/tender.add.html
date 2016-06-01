@@ -5,7 +5,10 @@
 
         <div class="row ui-section">
             <div class="col-lg-8 clearfix">
-                <h2 class="section-header">Добавить тендер</h2>
+                <h2 class="section-header">
+                    Добавить тендер
+                    <a ui-sref="tenders" class="btn btn-primary">К списку тендеров</a>
+                </h2>
             </div>
             <div class="col-md-12">
                 <section class="panel panel-default">
@@ -38,7 +41,7 @@
                                 <section class="steps-container">
                                     <div class="row">
                                         <!--First Step-->
-                                        <form action="" class="form-horizontal tender-add" name="addTenderFirstStep">
+                                        <div class="form-horizontal tender-add">
                                             <div ng-if="tender.stepsControlls.steps.first.active"
                                                  class="add-tender-step">
                                                 <div class="first-wizard-slide">
@@ -46,10 +49,10 @@
                                                          ng-include="'app/tenders/add_steps/first_step.html'"></div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
 
                                         <!--Second Step-->
-                                        <form action="" class="form-horizontal tender-add" name="addTenderSecStep">
+                                        <div class="form-horizontal tender-add">
                                             <div ng-if="tender.stepsControlls.steps.second.active"
                                                  class="add-tender-step">
                                                 <div class="second-wizard-slide">
@@ -57,7 +60,7 @@
                                                          ng-include="'app/tenders/add_steps/second_step.html'"></div>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </div>
 
                                     </div>
                                 </section>

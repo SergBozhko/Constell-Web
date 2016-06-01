@@ -78,9 +78,11 @@
     </div>
 </div>
 
-<div ng-if="tender.addTenderModel.PositionList.length != 0" class="constell-block-title mt-mini">Позиции</div>
+<div ng-if="tender.addTenderModel.PositionList.length != 0 &&
+            tender.addTenderModel.PositionList.length != null" class="constell-block-title mt-mini">Позиции</div>
 <!--Positions table-->
-<div ng-if="tender.addTenderModel.PositionList.length != 0" class="form-group">
+<div ng-if="tender.addTenderModel.PositionList.length != 0 &&
+            tender.addTenderModel.PositionList.length != null" class="form-group">
     <div class="table-wrapper table-main-p">
         <table class="table table-bordered table-striped table-responsive">
             <thead>
@@ -108,13 +110,13 @@
                     <td>
                         <div class="table-inner-input">
                             <input class="form-control" ng-model="position.amount" type="text">
-                            <span class="constell-unit">{{position.unit}}</span>
+                            <span class="constell-unit">{{position.unit.name}}</span>
                         </div>
                     </td>
                     <td>
                         <div class="table-inner-input">
                             <input class="form-control" ng-model="position.minPrice" type="text">
-                            <span class="constell-unit">{{position.currency}}</span>
+                            <span class="constell-unit">{{position.currency.name}}</span>
                         </div>
                     </td>
                 </tr>

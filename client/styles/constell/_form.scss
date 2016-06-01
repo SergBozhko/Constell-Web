@@ -23,7 +23,11 @@
             border: none !important;
             padding: 2px 12px !important;
             margin-top: -3px;
+            background: none !important;
         }
+    }
+    md-select[disabled] .md-select-value {
+        color: #3D4051;
     }
 
     .form-group + .form-group {
@@ -32,7 +36,8 @@
 
     md-list {
         padding: 0;
-        box-shadow: $boxShadow;
+        //box-shadow: $boxShadow;
+        border: 1px solid #CBD5DD;
     }
     .md-list-container {
         max-height: 450px !important;
@@ -45,6 +50,7 @@
 
         .controlls-btns {
             padding-left: 0;
+            text-transform: none;
         }
     }
 
