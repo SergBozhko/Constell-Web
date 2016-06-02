@@ -22,9 +22,10 @@
                                     <div class="constell-block-title mt-mini">Выберите категорию</div>
                                     <!--Category list-->
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12">Категория</label>
+                                        <label for="" class="col-sm-12">Категория <span class="req-star"></span></label>
                                         <md-select ng-model="positionAdd.positionAddObj.CategoryId"
-                                                   placeholder="Выбрать">
+                                                   placeholder="Выбрать"
+                                                   required="">
                                             <md-option ng-repeat="category in positionAdd.posCategory.Result"
                                                        value="{{category.id}}">
                                                 {{category.title}}
@@ -35,10 +36,11 @@
                                     <div class="constell-block-title mt-mini">Информация о позиции</div>
                                     <!--Position name-->
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12">Название позиции</label>
+                                        <label for="" class="col-sm-12">Название позиции <span class="req-star"></span></label>
                                         <div class="col-sm-12">
                                             <input ng-model="positionAdd.positionAddObj.Title" type="text"
-                                                   class="form-control">
+                                                   class="form-control"
+                                                   required="">
                                         </div>
                                     </div>
 
@@ -78,9 +80,10 @@
 
                                     <!--Position unit-->
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12">Единица измерения</label>
+                                        <label for="" class="col-sm-12">Единица измерения <span class="req-star"></span></label>
                                         <md-select ng-model="positionAdd.positionAddObj.Unit"
-                                                   placeholder="Выбрать">
+                                                   placeholder="Выбрать"
+                                                   required="">
                                             <md-option ng-repeat="unit in positionAdd.posUnits"
                                                        value="{{unit.id}}">
                                                 {{unit.name}}
@@ -90,9 +93,10 @@
 
                                     <!--Position Currency-->
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12">Валюта</label>
+                                        <label for="" class="col-sm-12">Валюта <span class="req-star"></span></label>
                                         <md-select ng-model="positionAdd.positionAddObj.Currency"
-                                                   placeholder="Выбрать">
+                                                   placeholder="Выбрать"
+                                                   required="">
                                             <md-option ng-repeat="currency in positionAdd.posCurrencys"
                                                        value="{{currency.id}}">
                                                 {{currency.name}}
@@ -111,7 +115,12 @@
 
                                 </form>
 
-                                <button ng-click="positionAdd.savePosition()" class="btn btn-primary">Добавить</button>
+                                <button ng-disabled="addPosition.$invalid || positionAdd.saveStatus" ng-click="positionAdd.savePosition()"
+                                        class="btn btn-primary">
+                                    <span ng-if="!positionAdd.saveStatus">Добавить</span>
+                                    <span ng-if="positionAdd.saveStatus">Добавление</span>
+                                </button>
+                                <span class="form-error-message" ng-if="addPosition.$invalid">Не все поля заполнены!</span>
                             </div>
                         </div>
 

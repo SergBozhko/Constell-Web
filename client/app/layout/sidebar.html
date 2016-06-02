@@ -5,11 +5,11 @@
         data-collapse-nav
         data-highlight-active>
         <li class="nav-title"><span>Навигация</span></li>
-        <li><a md-button aria-label="meanu" ui-sref="users"><i class="zmdi zmdi-accounts"></i><span>Пользователи</span>
+        <li><a md-button aria-label="meanu" ui-sref="users"><i class="zmdi zmdi-accounts"></i><span>Контрагенты</span>
         </a></li>
         <li><a md-button aria-label="meanu" ui-sref="tenders"><i class="zmdi zmdi-format-list-bulleted"></i><span>Тендеры</span>
         </a></li>
-        <li><a md-button aria-label="meanu" ui-sref="positions"><i class="zmdi zmdi-format-list-bulleted"></i><span>Позиции</span>
+        <li><a md-button aria-label="meanu" ui-sref="positions"><i class="zmdi zmdi-view-week"></i><span>Позиции</span>
         </a></li>
         <li class="nav-title"><span>Добавление</span></li>
         <li><a md-button aria-label="meanu" ui-sref="tenderAdd"><i
@@ -18,10 +18,10 @@
             class="zmdi zmdi-plus"></i><span>Добавить позицию</span> </a></li>
 
 
-        <li class="nav-title"><span data-translate="NAVIGATION"></span></li>
-        <li><a md-button aria-label="meanu" href="#/dashboard"><i class="zmdi zmdi-home"></i><span
+        <li class="nav-title"><span data-translate="NAVIGATION" ng-if="!releaseMode"></span></li>
+        <li ng-if="!releaseMode"><a md-button aria-label="meanu" href="#/dashboard"><i class="zmdi zmdi-home"></i><span
             data-translate="DASHBOARD"></span> </a></li>
-        <li>
+        <li ng-if="!releaseMode">
             <a md-button aria-label="meanu" href="#/ui"><i class="zmdi zmdi-card-giftcard"></i><span><span
                 data-translate="MATERIAL"></span> UI</span></a>
             <ul>
@@ -47,7 +47,7 @@
                     data-translate="GRIDS"></span></a></li>
             </ul>
         </li>
-        <li>
+        <li ng-if="!releaseMode">
             <a md-button aria-label="meanu" href="#/page"><i class="zmdi zmdi-pages"></i><span
                 data-translate="PAGES"></span></a>
             <ul>
@@ -72,7 +72,7 @@
                     data-translate="BLANK_PAGE"></span></a></li>
             </ul>
         </li>
-        <li>
+        <li ng-if="!releaseMode">
             <a md-button aria-label="meanu" href="#/table"><i class="zmdi zmdi-view-list"></i><span
                 data-translate="TABLES"></span></a>
             <ul>
@@ -84,7 +84,7 @@
                     data-translate="DYNAMIC_TABLES"></span></a></li>
             </ul>
         </li>
-        <li>
+        <li ng-if="!releaseMode">
             <a md-button aria-label="meanu" href="#/form"><i class="zmdi zmdi-edit"></i><span
                 data-translate="FORMS"></span></a>
             <ul>
@@ -98,7 +98,7 @@
                     data-translate="FORM_LAYOUTS"></span></a></li>
             </ul>
         </li>
-        <li>
+        <li ng-if="!releaseMode">
             <a md-button aria-label="meanu" href="#/chart"><i class="zmdi zmdi-chart"></i><span
                 data-translate="CHARTS"></span></a>
             <ul>
@@ -114,13 +114,13 @@
                     <span data-translate="MORE"></span></a></li>
             </ul>
         </li>
-        <li class="nav-divider"></li>
-        <li class="nav-title"><span data-translate="FEATURES"></span></li>
-        <li class="li-small"><a href="#/ui/components"><i class="fa fa-circle color-info"></i> <span
+        <li class="nav-divider" ng-if="!releaseMode"></li>
+        <li class="nav-title" ng-if="!releaseMode"><span data-translate="FEATURES"></span></li>
+        <li class="li-small" ng-if="!releaseMode"><a href="#/ui/components"><i class="fa fa-circle color-info"></i> <span
             data-translate="MATERIAL_COMPO"></span></a></li>
-        <li class="li-small"><a href="#/form/elements"><i class="fa fa-circle color-success"></i> <span
+        <li class="li-small" ng-if="!releaseMode"><a href="#/form/elements"><i class="fa fa-circle color-success"></i> <span
             data-translate="MATERIAL_ELEMENTS"></span></a></li>
-        <li class="li-small"><a href="#/ui/icons"><i class="fa fa-circle color-danger"></i> <span
+        <li class="li-small" ng-if="!releaseMode"><a href="#/ui/icons"><i class="fa fa-circle color-danger"></i> <span
             data-translate="MATERIAL_ICONS"></span></a></li>
     </ul>
 </div>

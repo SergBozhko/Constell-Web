@@ -41,7 +41,7 @@
                                 <section class="steps-container">
                                     <div class="row">
                                         <!--First Step-->
-                                        <div class="form-horizontal tender-add">
+                                        <form class="form-horizontal tender-add" name="tenderAddFirst">
                                             <div ng-if="tender.stepsControlls.steps.first.active"
                                                  class="add-tender-step">
                                                 <div class="first-wizard-slide">
@@ -49,10 +49,10 @@
                                                          ng-include="'app/tenders/add_steps/first_step.html'"></div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
 
                                         <!--Second Step-->
-                                        <div class="form-horizontal tender-add">
+                                        <form class="form-horizontal tender-add" name="tenderAddSecond">
                                             <div ng-if="tender.stepsControlls.steps.second.active"
                                                  class="add-tender-step">
                                                 <div class="second-wizard-slide">
@@ -60,7 +60,7 @@
                                                          ng-include="'app/tenders/add_steps/second_step.html'"></div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
 
                                     </div>
                                 </section>

@@ -2,9 +2,12 @@
     'use strict';
 
     angular.module('app')
-    .controller('AppCtrl', [ '$scope', '$rootScope', '$state', '$document', 'appConfig', AppCtrl]) // overall control
-    
-    function AppCtrl($scope, $rootScope, $state, $document, appConfig) {
+    .controller('AppCtrl', [ '$scope', '$rootScope', '$state', '$document', 'appConfig', 'MainSettings', AppCtrl]); // overall control
+
+    function AppCtrl($scope, $rootScope, $state, $document, appConfig, MainSettings) {
+
+        // ==== Release mode main state ====
+        $scope.releaseMode = MainSettings.releaseMode;
 
         $scope.pageTransitionOpts = appConfig.pageTransitionOpts;
         $scope.main = appConfig.main;
@@ -42,4 +45,4 @@
         });
     }
 
-})(); 
+})();

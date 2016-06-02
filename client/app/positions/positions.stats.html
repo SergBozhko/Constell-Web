@@ -12,55 +12,13 @@
         <div class="col-md-12">
             <section class="panel panel-default table-dynamic">
 
-                <div class="constell-block-title mt-mini">Последние предложения</div>
+                <div class="constell-block-title mt-mini">
+                    Общая информация
+
+                    <div ng-if="position.positionInfoLoader" class="constell-loader cl-right"></div>
+                </div>
 
                 <div class="tender-best-offers-wrapper">
-                    <!--Best offers table-->
-                    <div class="best-offers-table-wrapper">
-                        <div class="table-wrapper">
-                            <table class="table table-bordered table-striped table-responsive">
-                                <thead>
-                                <tr>
-                                    <th>
-                                        <div class="th disabled-th">
-                                            Позиция
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="th disabled-th">
-                                            Объем
-                                        </div>
-                                    </th>
-                                    <th ng-repeat="offerTitle in tender.offers.headerList">
-                                        <div class="th">
-                                            {{offerTitle}}
-                                        </div>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr data-ng-repeat="offer in tender.offers.positions">
-                                    <td>{{offer.positionTitle}}</td>
-                                    <td>{{offer.positionAmount}}</td>
-                                    <td ng-repeat="offerValue in offer.positionPriceList">
-                                        <span ng-if="offerValue != null">{{offerValue}}</span>
-                                        <span ng-if="offerValue == null">-</span>
-                                    </td>
-                                </tr>
-                                <tr ng-if="tender.offersPreloader">
-                                    <td colspan="2">
-                                        <div class="constell-loader cl-block"></div>
-                                    </td>
-                                </tr>
-                                <tr ng-if="tender.offers.positions.length == 0">
-                                    <td colspan="2">
-                                        Последние предложения отсутствуют
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
 
                     <!--Main inforamtion-->
                     <div class="col-md-12 constell-panel-info">
@@ -84,26 +42,71 @@
                 </div>
 
                 <div class="constell-graph-area">
-                    <div class="constell-block-title mt-mini">Все предложения</div>
+                    <div class="constell-block-title mt-mini">
+                        Все предложения
+                        <div ng-if="position.preloader" class="constell-loader cl-right"></div>
+                    </div>
 
-                    <div data-echarts data-options="tender.combo.options" style="height: 360px;"></div>
+                    <div data-echarts data-options="position.combo.options" style="height: 360px;"></div>
                 </div>
 
                 <div class="table-filters">
                     <div class="row">
                         <div class="col-sm-4 col-xs-6">
-                            <form>
+                            <div class="row">
+                                <label for="" class="col-sm-12">Поиск</label>
+                            </div>
+                            <form ng-submit="position.search()" class="search-form">
                                 <input type="text"
                                        placeholder="Найти..."
                                        class="form-control"
-                                       data-ng-model="searchKeywords"
-                                       data-ng-keyup="search()">
+                                       data-ng-model="position.positionCnfg.Search"
+                                       ng-change="position.searchWasChanged()"
+                                       ng-blur="position.search()">
+                                <div ng-click="position.clearSearch()" class="clear-search"><i
+                                    class="zmdi zmdi-close"></i></div>
                             </form>
                         </div>
-                        <div class="col-sm-3 col-xs-6 filter-result-info">
-                <span>
-                Showing {{filteredStores.length}}/{{stores.length}} entries
-                </span>
+                        <!--Tender date-->
+                        <div class="form-group clearfix">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="row">
+                                    <label for="" class="col-sm-12">Дата начала</label>
+                                </div>
+                                <div class="input-group ui-datepicker">
+                                    <input type="text"
+                                           class="form-control"
+                                           uib-datepicker-popup="{{format}}"
+                                           ng-model="position.positionCnfg.startTime"
+                                           is-open="position.status.startDate"
+                                           min-date="minDate"
+                                           max-date="maxDate"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           ng-change="position.getOffers()"
+                                           close-text="Close"/>
+                                    <span class="input-group-addon" ng-click="position.open('startDate')"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <div class="row">
+                                    <label for="" class="col-sm-12">Дата завершения</label>
+                                </div>
+                                <div class="input-group ui-datepicker">
+                                    <input type="text"
+                                           class="form-control"
+                                           uib-datepicker-popup="{{format}}"
+                                           ng-model="position.positionCnfg.endTime"
+                                           is-open="position.status.endDate"
+                                           min-date="minDate"
+                                           max-date="maxDate"
+                                           datepicker-options="dateOptions"
+                                           date-disabled="disabled(date, mode)"
+                                           ng-change="position.getOffers()"
+                                           close-text="Close"/>
+                                    <span class="input-group-addon" ng-click="position.open('endDate')"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,102 +116,80 @@
                         <thead>
                         <tr>
                             <th>
-                                <div class="th">
-                                    <i class="zmdi zmdi-more-vert"></i>
+                                <div class="th" ng-click="position.orderList('id')">
+                                    <span class="table-order-wrapper">
+                                        ID
+                                        <i ng-if="position.positionCnfg.OrderByInfo.target == 'id'"
+                                           class="zmdi zmdi-caret-down"
+                                           ng-class="{'zmdi-caret-down' : position.positionCnfg.OrderByInfo.course == 'desc',
+                                                      'zmdi-caret-up' : position.positionCnfg.OrderByInfo.course == 'asc'}"></i>
+                                    </span>
                                 </div>
                             </th>
                             <th>
-                                <div class="th">
-                                    ID
+                                <div class="th" ng-click="position.orderList('userName')">
+                                    <span class="table-order-wrapper">
+                                        Контактное лицо
+                                        <i ng-if="position.positionCnfg.OrderByInfo.target == 'userName'"
+                                           class="zmdi zmdi-caret-down"
+                                           ng-class="{'zmdi-caret-down' : position.positionCnfg.OrderByInfo.course == 'desc',
+                                                      'zmdi-caret-up' : position.positionCnfg.OrderByInfo.course == 'asc'}"></i>
+                                    </span>
                                 </div>
                             </th>
                             <th>
-                                <div class="th">
-                                    Имя
+                                <div class="th" ng-click="position.orderList('tenderName')">
+                                    <span class="table-order-wrapper">
+                                        Тендер
+                                        <i ng-if="position.positionCnfg.OrderByInfo.target == 'tenderName'"
+                                           class="zmdi zmdi-caret-down"
+                                           ng-class="{'zmdi-caret-down' : position.positionCnfg.OrderByInfo.course == 'desc',
+                                                      'zmdi-caret-up' : position.positionCnfg.OrderByInfo.course == 'asc'}"></i>
+                                    </span>
                                 </div>
                             </th>
                             <th>
-                                <div class="th">
-                                    Цена (руб)
+                                <div class="th" ng-click="position.orderList('price')">
+                                    <span class="table-order-wrapper">
+                                        Цена (руб)
+                                        <i ng-if="position.positionCnfg.OrderByInfo.target == 'price'"
+                                           class="zmdi zmdi-caret-down"
+                                           ng-class="{'zmdi-caret-down' : position.positionCnfg.OrderByInfo.course == 'desc',
+                                                      'zmdi-caret-up' : position.positionCnfg.OrderByInfo.course == 'asc'}"></i>
+                                    </span>
                                 </div>
                             </th>
                             <th>
-                                <div class="th">
-                                    Дата
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
-                                    Комментарии
-                                </div>
-                            </th>
-                            <th>
-                                <div class="th">
-                                    Проверенный
+                                <div class="th" ng-click="position.orderList('dateStr')">
+                                    <span class="table-order-wrapper">
+                                        Дата
+                                        <i ng-if="position.positionCnfg.OrderByInfo.target == 'dateStr'"
+                                           class="zmdi zmdi-caret-down"
+                                           ng-class="{'zmdi-caret-down' : position.positionCnfg.OrderByInfo.course == 'desc',
+                                                      'zmdi-caret-up' : position.positionCnfg.OrderByInfo.course == 'asc'}"></i>
+                                    </span>
                                 </div>
                             </th>
                         </tr>
                         </thead>
-                        <tbody offer-group data-ng-repeat="tender in tender.info.offers">
-                        <tr ng-click="open()" class="constell-open-row" ng-class="{'active' : opened}">
-                            <td class="constell-open-icon">
-                                <i ng-if="!opened" class="zmdi zmdi-caret-right"></i>
-                                <i ng-if="opened" class="zmdi zmdi-caret-down"></i>
-                            </td>
-                            <td>{{tender.userId}}</td>
-                            <td>{{tender.userName}}</td>
-                            <td>{{tender.price}}</td>
-                            <td>{{tender.dateStr}}</td>
-                            <td>{{tender.comments}}</td>
-                            <td>
-                                <md-checkbox ng-model="tender.isCertified" data-ng-disabled="true"> {{ checkbox.cb1 }}
-                                </md-checkbox>
-                            </td>
-                        </tr>
-                        <tr ng-if="opened" class="constell-group-row">
-                            <td colspan="7" class="constell-group-row-inner">
-                                <table class="table table-bordered table-striped table-responsive">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="th">
-                                                ID
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="th">
-                                                Позиция
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="th">
-                                                Цена (руб)
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="th">
-                                                Объем
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="th">
-                                                Дата
-                                            </div>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="children in tender.childrens">
-                                        <td>{{children.id}}</td>
-                                        <td>{{children.positionTitle}}</td>
-                                        <td>{{children.price}}</td>
-                                        <td>{{children.amount}} {{children.unit}}</td>
-                                        <td>{{children.dateStr}}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr data-ng-repeat="offer in position.offers.Result">
+                                <td>{{offer.userId}}</td>
+                                <td>{{offer.userName}}</td>
+                                <td>{{offer.tenderName}}</td>
+                                <td>{{offer.price}}</td>
+                                <td>{{offer.dateStr}}</td>
+                            </tr>
+                            <tr ng-if="position.preloader">
+                                <td colspan="5">
+                                    <div class="constell-loader cl-block"></div>
+                                </td>
+                            </tr>
+                            <tr ng-if="position.offers.Result.length == 0">
+                                <td colspan="5">
+                                    Предложения отсутствуют
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -216,22 +197,14 @@
                 <footer class="table-footer">
                     <div class="row">
                         <div class="col-md-6 page-num-info">
-                <span>
-                Show
-                <select data-ng-model="numPerPage"
-                        data-ng-options="num for num in numPerPageOpt"
-                        data-ng-change="onNumPerPageChange()">
-                </select>
-                entries per page
-                </span>
                         </div>
                         <div class="col-md-6 text-right pagination-container">
                             <uib-pagination class="pagination-sm"
-                                            ng-model="currentPage"
-                                            total-items="tenders.list.TotalItemsCount"
+                                            ng-model="position.positionCnfg.Page"
+                                            total-items="position.positionCnfg.totalCount"
                                             max-size="4"
-                                            ng-change="select(currentPage)"
-                                            items-per-page="10"
+                                            ng-change="position.getOffers()"
+                                            items-per-page="position.positionCnfg.PerPage"
                                             rotate="false"
                                             previous-text="Назад" next-text="Далее"
                                             boundary-links="false"></uib-pagination>

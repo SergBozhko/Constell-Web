@@ -541,13 +541,20 @@
 
         // Save tender
         function addTender() {
+
+            self.savingStatus = true;
+
             console.log('Отсылаю ', self.addTenderModel);
             rest.save({customUrl: 'Tender/SaveTender'}, self.addTenderModel, function (response) {
 
                 MessageInfo.show('Тендер успешно добавлен!');
 
+                self.savingStatus = false;
+
                 $state.go('tenders');
 
+            }, function() {
+                MessageInfo.show('Произошла ошибка! Попробуйте позднее...');
             });
         }
 
@@ -636,12 +643,16 @@
             self.updatePreloader = false;
             self.updateTender = function() {
                 self.updatePreloader = true;
+                self.savingStatus = true;
 
                 console.log('Обновляю тендер ', self.addTenderModel);
                 rest.save({customUrl: 'Tender/SaveTender'}, self.addTenderModel, function (response) {
 
                     MessageInfo.show('Изменения успешно сохранены');
+                    self.savingStatus = false;
 
+                }, function() {
+                    MessageInfo.show('Произошла ошибка! Попробуйте позднее...');
                 });
             }
 

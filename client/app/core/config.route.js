@@ -31,8 +31,8 @@
                 });
 
                 $urlRouterProvider
-                    .when('/', '/dashboard')
-                    .otherwise('/dashboard');
+                    .when('/', '/tenders')
+                    .otherwise('/tenders');
 
 
                 $stateProvider.state('dashboard', {

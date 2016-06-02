@@ -61,6 +61,11 @@ md-switch.md-checked.md-primary .md-bar {
         position: static;
         margin: 0 auto;
     }
+
+    &.cl-right {
+        top: 10px;
+        right: 15px;
+    }
 }
 
 @keyframes constell-preloader {
