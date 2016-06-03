@@ -571,6 +571,7 @@
 
         // Add tender model
         self.addTenderModel = addTenderModel;
+        self.addTenderModel.PositionList = [];
 
 
         // Get tender init
@@ -581,7 +582,8 @@
             // Update add tender model
             self.addTenderModel.Id = response.id;
             self.addTenderModel.Title = response.title;
-            self.addTenderModel.StartDate = response.startTime;
+            //self.addTenderModel.StartDate = response.startTime;
+            self.addTenderModel.StartDate = response.startTimeDate;
             self.addTenderModel.EndDate = response.endTime;
             self.addTenderModel.isActive = response.isActive;
             self.addTenderModel.ForCertificed = response.ForCertificed;

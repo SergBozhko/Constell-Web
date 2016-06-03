@@ -123,10 +123,10 @@
                                 </div>
                             </th>
                             <th>
-                                <div class="th" ng-click="tender.orderList('userId')">
+                                <div class="th" ng-click="tender.orderList('id')">
                                     <span class="table-order-wrapper">
                                         ID
-                                        <i ng-if="tender.tenderOffCnfg.OrderByInfo.target == 'userId'"
+                                        <i ng-if="tender.tenderOffCnfg.OrderByInfo.target == 'id'"
                                            class="zmdi zmdi-caret-down"
                                            ng-class="{'zmdi-caret-down' : tender.tenderOffCnfg.OrderByInfo.course == 'desc',
                                                       'zmdi-caret-up' : tender.tenderOffCnfg.OrderByInfo.course == 'asc'}"></i>
@@ -196,7 +196,7 @@
                                 <i ng-if="!opened" class="zmdi zmdi-caret-right"></i>
                                 <i ng-if="opened" class="zmdi zmdi-caret-down"></i>
                             </td>
-                            <td>{{offer.userId}}</td>
+                            <td>{{offer.id}}</td>
                             <td>{{offer.userName}}</td>
                             <td>{{offer.price}}</td>
                             <td>{{offer.dateStr}}</td>
