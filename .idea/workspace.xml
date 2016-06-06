@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="86c5ad54-ae90-4c7d-83cb-51b00d37670e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/app.factory.js" afterPath="$PROJECT_DIR$/client/app/app.factory.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/app.service.js" afterPath="$PROJECT_DIR$/client/app/app.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/core/config.route.js" afterPath="$PROJECT_DIR$/client/app/core/config.route.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/positions/position.add.html" afterPath="$PROJECT_DIR$/client/app/positions/position.add.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/positions/position.edit.html" afterPath="$PROJECT_DIR$/client/app/positions/position.edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/positions/positions.controller.js" afterPath="$PROJECT_DIR$/client/app/positions/positions.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/positions/positions.html" afterPath="$PROJECT_DIR$/client/app/positions/positions.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/tenders/add_steps/first_step.html" afterPath="$PROJECT_DIR$/client/app/tenders/add_steps/first_step.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/tenders/add_steps/second_step.html" afterPath="$PROJECT_DIR$/client/app/tenders/add_steps/second_step.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/tenders/tender.add.html" afterPath="$PROJECT_DIR$/client/app/tenders/tender.add.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/tenders/tender.edit.html" afterPath="$PROJECT_DIR$/client/app/tenders/tender.edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/tenders/tender.stats.html" afterPath="$PROJECT_DIR$/client/app/tenders/tender.stats.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/tenders/tenders.controller.js" afterPath="$PROJECT_DIR$/client/app/tenders/tenders.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/tenders/tenders.html" afterPath="$PROJECT_DIR$/client/app/tenders/tenders.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/users/users.controller.js" afterPath="$PROJECT_DIR$/client/app/users/users.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/app/users/users.html" afterPath="$PROJECT_DIR$/client/app/users/users.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.html" afterPath="$PROJECT_DIR$/client/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/styles/constell/_constell.scss" afterPath="$PROJECT_DIR$/client/styles/constell/_constell.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/styles/constell/_form.scss" afterPath="$PROJECT_DIR$/client/styles/constell/_form.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/styles/constell/_general.scss" afterPath="$PROJECT_DIR$/client/styles/constell/_general.scss" />
-    </list>
+    <list default="true" id="86c5ad54-ae90-4c7d-83cb-51b00d37670e" name="Default" comment="" />
     <ignored path="material.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -452,7 +430,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1366" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24944155" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
