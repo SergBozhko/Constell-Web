@@ -68,7 +68,7 @@
                             <div class="panel-body">
                                 <span class="panel-label">Информация</span>
                                 <ul class="list-group no-margin">
-                                    <li class="list-group-item">{{tender.info.title}}</li>
+                                    <li class="list-group-item"><b>Наименование:</b> {{tender.info.title}}</li>
                                     <li class="list-group-item"><b>Категория: </b>{{tender.info.category}}</li>
                                     <li class="list-group-item">
                                         <b>Минимальное предложение: </b>
@@ -208,7 +208,7 @@
                         </tr>
                         <tr ng-if="opened" class="constell-group-row">
                             <td colspan="7" class="constell-group-row-inner">
-                                <table class="table table-bordered table-striped table-responsive">
+                                <table class="table table-bordered table-striped table-responsive table-offers-childrens">
                                     <thead>
                                     <tr>
                                         <th>
@@ -231,11 +231,6 @@
                                                 Объем
                                             </div>
                                         </th>
-                                        <th>
-                                            <div class="th">
-                                                Дата
-                                            </div>
-                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -244,7 +239,11 @@
                                         <td>{{children.positionTitle}}</td>
                                         <td>{{children.price}}</td>
                                         <td>{{children.amount}} {{children.unit}}</td>
-                                        <td>{{children.dateStr}}</td>
+                                    </tr>
+                                    <tr ng-if="!offer.childrens.length">
+                                        <td colspan="4">
+                                            Предложения отсутствуют
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

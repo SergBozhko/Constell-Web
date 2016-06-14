@@ -51,6 +51,7 @@
     bottom: auto !important;
     top: 5px !important;
     color: $brand-primary !important;
+    font-weight: 700;
 }
 
 .table-wrapper {
@@ -110,7 +111,7 @@
         color: #fff;
     }
     .table thead th > .th {
-        padding: 15px !important;
+        padding: 15px;
     }
     .table md-checkbox {
         margin-bottom: 0;
@@ -147,6 +148,7 @@
     }
 
 }
+
 .search-form {
     position: relative;
 
@@ -196,6 +198,9 @@
 .constell-group-row {
     .constell-group-row-inner {
         padding: 15px 15px 0 15px !important;
+    }
+    thead > tr {
+        background-color: #6D6D6D !important;
     }
 }
 .constell-open-icon {

@@ -583,7 +583,7 @@
             self.addTenderModel.Id = response.id;
             self.addTenderModel.Title = response.title;
             self.addTenderModel.StartDate = response.startTimeDate;
-            self.addTenderModel.EndDate = response.endTime;
+            self.addTenderModel.EndDate = response.endTimeDate;
             self.addTenderModel.isActive = response.isActive;
             self.addTenderModel.ForCertificed = response.ForCertificed;
             self.addTenderModel.IsOpenTender = response.isOpenTender;
