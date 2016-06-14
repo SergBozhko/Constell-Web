@@ -541,13 +541,20 @@
 
         // Save tender
         function addTender() {
+
+            self.savingStatus = true;
+
             console.log('Отсылаю ', self.addTenderModel);
             rest.save({customUrl: 'Tender/SaveTender'}, self.addTenderModel, function (response) {
 
                 MessageInfo.show('Тендер успешно добавлен!');
 
+                self.savingStatus = false;
+
                 $state.go('tenders');
 
+            }, function() {
+                MessageInfo.show('Произошла ошибка! Попробуйте позднее...');
             });
         }
 
@@ -564,6 +571,7 @@
 
         // Add tender model
         self.addTenderModel = addTenderModel;
+        self.addTenderModel.PositionList = [];
 
 
         // Get tender init
@@ -574,16 +582,18 @@
             // Update add tender model
             self.addTenderModel.Id = response.id;
             self.addTenderModel.Title = response.title;
-            self.addTenderModel.StartDate = response.startTime;
+            self.addTenderModel.StartDate = response.startTimeDate;
             self.addTenderModel.EndDate = response.endTime;
             self.addTenderModel.isActive = response.isActive;
             self.addTenderModel.ForCertificed = response.ForCertificed;
             self.addTenderModel.IsOpenTender = response.isOpenTender;
             self.addTenderModel.CategoryId = response.categoryId;
-            response.positions.forEach(function(item) {
+            response.positionsList.forEach(function(item) {
                 self.addTenderModel.PositionList.push({
                     id: item.id,
                     title: item.title,
+                    amount: item.Amount,
+                    minPrice: item.MinPrice,
                     currency: item.currency,
                     unit: item.unit
                 });
@@ -636,12 +646,16 @@
             self.updatePreloader = false;
             self.updateTender = function() {
                 self.updatePreloader = true;
+                self.savingStatus = true;
 
                 console.log('Обновляю тендер ', self.addTenderModel);
                 rest.save({customUrl: 'Tender/SaveTender'}, self.addTenderModel, function (response) {
 
                     MessageInfo.show('Изменения успешно сохранены');
+                    self.savingStatus = false;
 
+                }, function() {
+                    MessageInfo.show('Произошла ошибка! Попробуйте позднее...');
                 });
             }
 

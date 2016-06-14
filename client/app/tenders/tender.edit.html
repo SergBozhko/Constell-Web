@@ -20,10 +20,12 @@
                                     <uib-tab heading="Детали">
                                         <!--Tender name-->
                                         <div class="form-group">
-                                            <label for="" class="col-sm-12">Название тендера</label>
+                                            <label for="" class="col-sm-12">Название тендера <span
+                                                class="req-star"></span></label>
                                             <div class="col-sm-12">
                                                 <input ng-model="tenderEdit.addTenderModel.Title" type="text"
-                                                       class="form-control">
+                                                       class="form-control"
+                                                       required="">
                                             </div>
                                         </div>
 
@@ -31,7 +33,8 @@
                                         <div class="form-group">
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="row">
-                                                    <label for="" class="col-sm-12">Дата начала</label>
+                                                    <label for="" class="col-sm-12">Дата начала <span
+                                                        class="req-star"></span></label>
                                                 </div>
                                                 <div class="input-group ui-datepicker">
                                                     <input type="text"
@@ -43,8 +46,7 @@
                                                            max-date="maxDate"
                                                            datepicker-options="dateOptions"
                                                            date-disabled="disabled(date, mode)"
-                                                           ng-required="true"
-                                                           close-text="Close"/>
+                                                           close-text="Закрыть"/>
                                                     <span class="input-group-addon"
                                                           ng-click="tenderEdit.open('startDate')"><i
                                                         class="fa fa-calendar"></i></span>
@@ -52,7 +54,8 @@
                                             </div>
                                             <div class="col-md-6 col-sm-12">
                                                 <div class="row">
-                                                    <label for="" class="col-sm-12">Дата завершения</label>
+                                                    <label for="" class="col-sm-12">Дата завершения <span
+                                                        class="req-star"></span></label>
                                                 </div>
                                                 <div class="input-group ui-datepicker">
                                                     <input type="text"
@@ -64,8 +67,7 @@
                                                            max-date="maxDate"
                                                            datepicker-options="dateOptions"
                                                            date-disabled="disabled(date, mode)"
-                                                           ng-required="true"
-                                                           close-text="Close"/>
+                                                           close-text="Закрыть"/>
                                                     <span class="input-group-addon"
                                                           ng-click="tenderEdit.open('endDate')"><i
                                                         class="fa fa-calendar"></i></span>
@@ -109,7 +111,8 @@
                                              class="constell-block-title mt-mini">Позиции
                                         </div>
                                         <!--Positions table-->
-                                        <div ng-if="tenderEdit.addTenderModel.PositionList.length != 0" class="form-group">
+                                        <div ng-if="tenderEdit.addTenderModel.PositionList.length != 0"
+                                             class="form-group">
                                             <div class="table-wrapper table-main-p">
                                                 <table class="table table-bordered table-striped table-responsive">
                                                     <thead>
@@ -138,14 +141,16 @@
                                                             <div class="table-inner-input">
                                                                 <input class="form-control" ng-model="position.amount"
                                                                        type="text">
-                                                                <span class="constell-unit">{{position.unit.name}}</span>
+                                                                <span
+                                                                    class="constell-unit">{{position.unit}}</span>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="table-inner-input">
                                                                 <input class="form-control" ng-model="position.minPrice"
                                                                        type="text">
-                                                                <span class="constell-unit">{{position.currency.name}}</span>
+                                                                <span
+                                                                    class="constell-unit">{{position.currency}}</span>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -177,10 +182,11 @@
                                                             ng-repeat="position in tenderEdit.positionsList.Result">
                                                             <p> {{ position.title }} </p>
                                                             <md-checkbox class="md-secondary"
-                                                                         ng-change="tenderEdit.setPosition(position.id, position.title, position.unit, position.currency)"
+                                                                         ng-change="tenderEdit.setPosition(position.id, position.title, position.unit.name, position.currency.name)"
                                                                          ng-true-value="{{position.id}}"
                                                                          ng-model="position.selected"></md-checkbox>
-                                                        </md-list-item>{{position.selected}}
+                                                        </md-list-item>
+                                                        {{position.selected}}
                                                         <p class="text-center"
                                                            ng-if="tenderEdit.positionsList.Result.length == 0">Позиции
                                                             отсутствуют</p>
@@ -192,8 +198,18 @@
                                         </div>
                                     </uib-tab>
                                 </uib-tabset>
-                                {{tenderEdit.addTenderModel}}
-                                <div class="btn btn-primary" ng-click="tenderEdit.updateTender()">Сохранить</div>
+
+                                <div ng-disabled="tenderEdit.addTenderModel.Title == null || tenderEdit.addTenderModel.Title == ''
+                                    || tenderEdit.addTenderModel.StartDate == null || tenderEdit.addTenderModel.StartDate == ''
+                                    || tenderEdit.addTenderModel.EndDate == null || tenderEdit.addTenderModel.EndDate == ''
+                                    || tenderEdit.savingStatus"
+                                     class="btn btn-primary" ng-click="tenderEdit.updateTender()">
+                                    <span ng-if="!tenderEdit.savingStatus">Сохранить</span>
+                                    <span ng-if="tenderEdit.savingStatus">Сохранение</span>
+                                </div>
+                                <span class="form-error-message" ng-if="tenderEdit.addTenderModel.Title == null || tenderEdit.addTenderModel.Title == ''
+                                    || tenderEdit.addTenderModel.StartDate == null || tenderEdit.addTenderModel.StartDate == ''
+                                    || tenderEdit.addTenderModel.EndDate == null || tenderEdit.addTenderModel.EndDate == ''">Не все поля заполнены!</span>
                             </form>
                         </div>
                     </section>

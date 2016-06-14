@@ -25,10 +25,7 @@
 
         self.categories = rest.get({customUrl: 'Tender/GetCategories'});
 
-        /**
-         * @type {{customUrl: string, Page: number, PerPage: number}}
-         * Main tenders config obj
-         */
+
         self.positionCnfg = {
             customUrl: 'Position/GetPositions',
             categoryId: null,
@@ -38,9 +35,6 @@
         };
         self.preloader = true;
 
-        /**
-         * Get positions list
-         */
         function getPositions() {
             self.preloader = true;
 
@@ -119,12 +113,216 @@
 
         var self = this;
 
+        // Init functions
+        self.getOffers = getOffers;
+        self.getPositionPraph = getPositionPraph;
+        self.orderList = orderList;
+        self.search = search;
+        self.searchWasChanged = searchWasChanged;
+        self.clearSearch = clearSearch;
+        self.open = open;
+        self.setDate = setDate;
+
         // Info about position
+        self.positionInfoLoader = true;
         self.info = rest.get({customUrl: 'Position/GetPosition', positionId: $stateParams.positionId});
 
         self.info.$promise.then(function (response) {
             console.log('Position/GetPosition (Info about position)', response);
+            self.positionInfoLoader = false;
         });
+        // ===============================
+
+
+        self.categories = rest.get({customUrl: 'Tender/GetCategories'});
+
+
+        self.positionCnfg = {
+            customUrl: 'Position/GetOffersForPosition',
+            positionId: $stateParams.positionId,
+            categoryId: null,
+            Page: 1,
+            PerPage: 10,
+            SearchName: 'userName'
+        };
+        self.preloader = true;
+
+        function getOffers() {
+            self.preloader = true;
+
+            self.offers = tCtrl.getElements(self.positionCnfg);
+            self.offers.$promise.then(function() {
+                self.preloader = false;
+            });
+
+            // Get graphic
+            getPositionPraph(self.positionCnfg);
+
+        }
+
+        function orderList(orderField) {
+
+            tCtrl.order(self.positionCnfg, orderField);
+            getOffers();
+
+        }
+
+
+        // Search
+        var changed = false;
+
+        function search() {
+
+            if (changed) {
+                getOffers();
+
+                changed = false;
+            }
+
+        }
+
+        // Search was changed
+        function searchWasChanged() {
+            changed = true;
+        }
+
+        function clearSearch() {
+
+            if (self.positionCnfg.Search != '' && self.positionCnfg.Search != null) {
+                self.positionCnfg.Search = '';
+                searchWasChanged();
+                search();
+            }
+
+        }
+
+        // Position graphic
+        function getPositionPraph(config) {
+
+            var posCnfg = Object.assign({}, config);
+
+            posCnfg.customUrl = 'Position/GetDataOfGraphForPosition';
+
+            self.stats = tCtrl.getElements(posCnfg);
+            self.stats.$promise.then(function(response) {
+
+                self.combo = {};
+                self.combo.options = {
+                    tooltip: {
+                        trigger: 'axis',
+                        showDelay: 0,
+                        axisPointer: {
+                            show: true,
+                            type: 'cross',
+                            lineStyle: {
+                                type: 'dashed',
+                                width: 1
+                            }
+                        },
+                        formatter: function (params) {
+
+                            var date = new Date(params.value[0]);
+
+                            return 'Имя: ' + params.value[3] + '<br>'
+                                + 'Позиция: ' + params.value[4] + '<br>'
+                                + 'Цена: ' + params.value[2] + ' руб<br>'
+                                + 'Дата: ' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                        }
+                    },
+                    legend: {
+                        data: ['Постоянные', 'Новые']
+                    },
+                    toolbox: {
+                        show: false
+                    },
+                    xAxis: [
+                        {
+                            type: 'value',
+                            scale: true,
+                            axisLabel: {
+                                formatter: function (value, index) {
+                                    var date = new Date(value);
+
+                                    return date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+                                }
+                            }
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            scale: true,
+                            axisLabel: {
+                                formatter: '{value} руб'
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            name: 'Постоянные',
+                            type: 'scatter',
+                            data: response.certified,
+                            symbolSize: 8,
+                            markPoint: {
+                                data: [
+                                    //{type : 'max', name: 'Max'},
+                                    {type: 'min', name: 'Min'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    //{type : 'average', name: 'Average'}
+                                ]
+                            }
+                        },
+                        {
+                            name: 'Новые',
+                            type: 'scatter',
+                            data: response.simple,
+                            symbolSize: 8,
+                            markPoint: {
+                                data: [
+                                    //{type: 'max', name: 'Max'},
+                                    {type: 'min', name: 'Min'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    //{type: 'average', name: 'Average'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+                self.stats.$promise.then(function (response) {
+                    response.certified.forEach(function (element) {
+                        element[0] = new Date(element[0]);
+                    });
+                    response.simple.forEach(function (element) {
+                        element[0] = new Date(element[0]);
+                    });
+                });
+
+            });
+        }
+
+        getOffers();
+
+
+        // Date picker
+        self.status = {
+            startDate: false,
+            endDate: false
+        };
+        function open(datePicker) {
+            self.status[datePicker] = true;
+        }
+
+        function setDate(year, month, day) {
+            self.dt = new Date(year, month, day);
+        }
+
 
     }
 
@@ -152,6 +350,9 @@
 
 
         function savePosition() {
+
+            self.saveStatus = true;
+
             var autoText = 'По договоренности, на основании согласованных заявок';
 
             if (self.positionAddObj.MaterialTerms == '' || self.positionAddObj.MaterialTerms == null) {
@@ -162,10 +363,14 @@
                 self.positionAddObj.MaterialConditions = autoText;
             }
 
-            rest.save({customUrl: 'Position/SavePositions'}, self.positionAddObj, function(response) {
+            rest.save({customUrl: 'Position/SavePosition'}, self.positionAddObj, function(response) {
                 MessageInfo.show('Позиция успешно добавлена!');
 
+                self.saveStatus = false;
+
                 $state.go('positions');
+            }, function() {
+                MessageInfo.show('Произошла ошибка! Попробуйте позднее...');
             });
 
             console.log('Сохраняю позицию: ', self.positionAddObj);
@@ -209,6 +414,9 @@
 
         // Save position
         function savePosition() {
+
+            self.saveStatus = true;
+
             var autoText = 'По договоренности, на основании согласованных заявок';
 
             if (self.positionAddObj.MaterialTerms == '' || self.positionAddObj.MaterialTerms == null) {
@@ -219,8 +427,11 @@
                 self.positionAddObj.MaterialConditions = autoText;
             }
 
-            rest.save({customUrl: 'Position/SavePositions'}, self.positionAddObj, function(response) {
+            rest.save({customUrl: 'Position/SavePosition'}, self.positionAddObj, function(response) {
                 MessageInfo.show('Позиция успешно сохранена!');
+                self.saveStatus = false;
+            }, function() {
+                MessageInfo.show('Произошла ошибка! Попробуйте позднее...');
             });
 
             console.log('Сохраняю позицию: ', self.positionAddObj);

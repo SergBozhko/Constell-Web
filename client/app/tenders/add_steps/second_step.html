@@ -2,9 +2,9 @@
 
 <!--Tender name-->
 <div class="form-group">
-    <label for="" class="col-sm-12">Название тендера</label>
+    <label for="" class="col-sm-12">Название тендера <span class="req-star"></span></label>
     <div class="col-sm-12">
-        <input ng-model="tender.addTenderModel.Title" type="text" class="form-control">
+        <input ng-model="tender.addTenderModel.Title" required type="text" class="form-control">
     </div>
 </div>
 
@@ -12,7 +12,7 @@
 <div class="form-group">
     <div class="col-md-6 col-sm-12">
         <div class="row">
-            <label for="" class="col-sm-12">Дата начала</label>
+            <label for="" class="col-sm-12">Дата начала <span class="req-star"></span></label>
         </div>
         <div class="input-group ui-datepicker">
             <input type="text"
@@ -24,14 +24,14 @@
                    max-date="maxDate"
                    datepicker-options="dateOptions"
                    date-disabled="disabled(date, mode)"
-                   ng-required="true"
+                   required=""
                    close-text="Close"/>
             <span class="input-group-addon" ng-click="tender.open('startDate')"><i class="fa fa-calendar"></i></span>
         </div>
     </div>
     <div class="col-md-6 col-sm-12">
         <div class="row">
-            <label for="" class="col-sm-12">Дата завершения</label>
+            <label for="" class="col-sm-12">Дата завершения <span class="req-star"></span></label>
         </div>
         <div class="input-group ui-datepicker">
             <input type="text"
@@ -43,7 +43,7 @@
                    max-date="maxDate"
                    datepicker-options="dateOptions"
                    date-disabled="disabled(date, mode)"
-                   ng-required="true"
+                   required=""
                    close-text="Close"/>
             <span class="input-group-addon" ng-click="tender.open('endDate')"><i class="fa fa-calendar"></i></span>
         </div>
@@ -127,15 +127,14 @@
 
 <!--Steps nav-->
 <div class="steps-nav clearfix">
-        <span ng-if="tender.addCampSecondStep.$invalid" ui-wave tooltip-placement="left"
-              uib-tooltip="Не все поля заполнены"
-              tooltip-append-to-body="true"
-              class="form-required"><i class="zmdi zmdi-alert-circle-o"></i></span>
+    <span class="form-error-message" ng-if="tenderAddSecond.$invalid">Не все поля заполнены!</span>
     <a class="btn btn-primary"
        ng-click="tender.goToStep('first')">Назад
     </a>
     <a class="btn btn-primary"
-       ng-class="{'disabled' : tender.addCampSecondStep.$invalid}"
-       ng-click="tender.addTender()">Завершить
+       ng-disabled="tenderAddSecond.$invalid || tender.savingStatus"
+       ng-click="tender.addTender()">
+        <span ng-if="!tender.savingStatus">Добавить тендер</span>
+        <span ng-if="tender.savingStatus">Добавление</span>
     </a>
 </div>

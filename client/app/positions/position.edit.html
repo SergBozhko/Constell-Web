@@ -35,10 +35,11 @@
                                     <div class="constell-block-title mt-mini">Информация о позиции</div>
                                     <!--Position name-->
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12">Название позиции</label>
+                                        <label for="" class="col-sm-12">Название позиции <span class="req-star"></span></label>
                                         <div class="col-sm-12">
                                             <input ng-model="positionEdit.positionAddObj.Title" type="text"
-                                                   class="form-control">
+                                                   class="form-control"
+                                                   required>
                                         </div>
                                     </div>
 
@@ -78,9 +79,10 @@
 
                                     <!--Position unit-->
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12">Единица измерения</label>
+                                        <label for="" class="col-sm-12">Единица измерения <span class="req-star"></span></label>
                                         <md-select ng-model="positionEdit.positionAddObj.Unit"
-                                                   placeholder="Выбрать">
+                                                   placeholder="Выбрать"
+                                                   required="">
                                             <md-option ng-repeat="unit in positionEdit.posUnits"
                                                        value="{{unit.id}}">
                                                 {{unit.name}}
@@ -90,9 +92,10 @@
 
                                     <!--Position Currency-->
                                     <div class="form-group">
-                                        <label for="" class="col-sm-12">Валюта</label>
+                                        <label for="" class="col-sm-12">Валюта <span class="req-star"></span></label>
                                         <md-select ng-model="positionEdit.positionAddObj.Currency"
-                                                   placeholder="Выбрать">
+                                                   placeholder="Выбрать"
+                                                   required="">
                                             <md-option ng-repeat="currency in positionEdit.posCurrencys"
                                                        value="{{currency.id}}">
                                                 {{currency.name}}
@@ -111,8 +114,11 @@
 
                                 </form>
 
-                                <button ng-click="positionEdit.savePosition()" class="btn btn-primary">Сохранить
+                                <button ng-disabled="editPosition.$invalid || positionEdit.saveStatus" ng-click="positionEdit.savePosition()" class="btn btn-primary">
+                                    <span ng-if="!positionEdit.saveStatus">Сохранить</span>
+                                    <span ng-if="positionEdit.saveStatus">Сохранение</span>
                                 </button>
+                                <span class="form-error-message" ng-if="editPosition.$invalid">Не все поля заполнены!</span>
                             </div>
                         </div>
 
