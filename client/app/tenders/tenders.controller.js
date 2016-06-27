@@ -592,8 +592,8 @@
                 self.addTenderModel.PositionList.push({
                     id: item.id,
                     title: item.title,
-                    amount: item.Amount,
-                    minPrice: item.MinPrice,
+                    amount: item.amount,
+                    minPrice: item.minPrice,
                     currency: item.currency,
                     unit: item.unit
                 });

@@ -41,7 +41,7 @@
                                 <tbody>
                                 <tr data-ng-repeat="offer in tender.offers.positions">
                                     <td>{{offer.positionTitle}}</td>
-                                    <td>{{offer.positionAmount}}</td>
+                                    <td>{{offer.positionAmount}} шт.</td>
                                     <td ng-repeat="offerValue in offer.positionPriceList">
                                         <span ng-if="offerValue != null">{{offerValue}}</span>
                                         <span ng-if="offerValue == null">-</span>
