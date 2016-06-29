@@ -7,9 +7,12 @@
     'use strict';
 
     angular.module('app.users')
-        .controller('UsersCtrl', ['tCtrl', 'MainSettings', 'rest', UsersCtrl]);
+        .controller('UsersCtrl', ['tCtrl', 'UserModel', UsersCtrl]);
 
-    function UsersCtrl(tCtrl, MainSettings, rest) {
+    function UsersCtrl(tCtrl, UserModel) {
+
+        var testUser = new UserModel(5, 'Sergey');
+        console.log(testUser);
 
         var self = this;
 
