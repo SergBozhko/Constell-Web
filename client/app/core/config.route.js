@@ -42,65 +42,86 @@
 
 
                 // Users
-                $stateProvider.state('users', {
-                    url: '/users',
-                    templateUrl: 'app/users/users.html',
-                    controller: 'UsersCtrl',
-                    controllerAs: 'users'
-                });
+                $stateProvider
+                    .state('users', {
+                        url: '/users',
+                        templateUrl: 'app/users/users.html',
+                        controller: 'UsersCtrl',
+                        controllerAs: 'users'
+                    })
+                    .state('userAbout', {
+                        url: '/users/:userId',
+                        templateUrl: '',
+                        controller: 'UserAboutCtrl',
+                        cotrollerAs: 'user'
+                    })
+                    .state('userEdit', {
+                        url: '/users/edit/:userId',
+                        templateUrl: '',
+                        controller: 'UserEditCtrl',
+                        cotrollerAs: 'user'
+                    })
+                    .state('userAdd', {
+                        url: '/users/add/',
+                        templateUrl: '',
+                        controller: 'UserAddCtrl',
+                        cotrollerAs: 'user'
+                    });
 
 
                 // Tenders
-                $stateProvider.state('tenders', {
-                    url: '/tenders',
-                    templateUrl: 'app/tenders/tenders.html',
-                    controller: 'TendersCtrl',
-                    controllerAs: 'tenders'
-                });
-                $stateProvider.state('tender', {
-                    url: '/tenders/:tender',
-                    templateUrl: 'app/tenders/tender.stats.html',
-                    controller: 'TenderStatsCtrl',
-                    controllerAs: 'tender'
-                });
-                $stateProvider.state('tenderAdd', {
-                    url: '/tenders/add/',
-                    templateUrl: 'app/tenders/tender.add.html',
-                    controller: 'TendersAdd',
-                    controllerAs: 'tender'
-                });
-                $stateProvider.state('tenderEdit', {
-                    url: '/tenders/edit/:tenderToEdit',
-                    templateUrl: 'app/tenders/tender.edit.html',
-                    controller: 'TenderEdit',
-                    controllerAs: 'tenderEdit'
-                });
+                $stateProvider
+                    .state('tenders', {
+                        url: '/tenders',
+                        templateUrl: 'app/tenders/tenders.html',
+                        controller: 'TendersCtrl',
+                        controllerAs: 'tenders'
+                    })
+                    .state('tender', {
+                        url: '/tenders/:tender',
+                        templateUrl: 'app/tenders/tender.stats.html',
+                        controller: 'TenderStatsCtrl',
+                        controllerAs: 'tender'
+                    })
+                    .state('tenderAdd', {
+                        url: '/tenders/add/',
+                        templateUrl: 'app/tenders/tender.add.html',
+                        controller: 'TendersAdd',
+                        controllerAs: 'tender'
+                    })
+                    .state('tenderEdit', {
+                        url: '/tenders/edit/:tenderToEdit',
+                        templateUrl: 'app/tenders/tender.edit.html',
+                        controller: 'TenderEdit',
+                        controllerAs: 'tenderEdit'
+                    });
 
                 // Positions
-                $stateProvider.state('positions', {
-                    url: '/positions',
-                    templateUrl: 'app/positions/positions.html',
-                    controller: 'PositionsCtrl',
-                    controllerAs: 'positions'
-                });
-                $stateProvider.state('positionsStats', {
-                    url: '/positions/:positionId',
-                    templateUrl: 'app/positions/positions.stats.html',
-                    controller: 'PositionsStatsCtrl',
-                    controllerAs: 'position'
-                });
-                $stateProvider.state('positionAdd', {
-                    url: '/positions/add/',
-                    templateUrl: 'app/positions/position.add.html',
-                    controller: 'PositionsAdd',
-                    controllerAs: 'positionAdd'
-                });
-                $stateProvider.state('positionEdit', {
-                    url: '/positions/edit/:positionId',
-                    templateUrl: 'app/positions/position.edit.html',
-                    controller: 'PositionsEdit',
-                    controllerAs: 'positionEdit'
-                });
+                $stateProvider
+                    .state('positions', {
+                        url: '/positions',
+                        templateUrl: 'app/positions/positions.html',
+                        controller: 'PositionsCtrl',
+                        controllerAs: 'positions'
+                    })
+                    .state('positionsStats', {
+                        url: '/positions/:positionId',
+                        templateUrl: 'app/positions/positions.stats.html',
+                        controller: 'PositionsStatsCtrl',
+                        controllerAs: 'position'
+                    })
+                    .state('positionAdd', {
+                        url: '/positions/add/',
+                        templateUrl: 'app/positions/position.add.html',
+                        controller: 'PositionsAdd',
+                        controllerAs: 'positionAdd'
+                    })
+                    .state('positionEdit', {
+                        url: '/positions/edit/:positionId',
+                        templateUrl: 'app/positions/position.edit.html',
+                        controller: 'PositionsEdit',
+                        controllerAs: 'positionEdit'
+                    });
 
             }]
         );

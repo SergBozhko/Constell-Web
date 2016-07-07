@@ -8,6 +8,7 @@
 
     angular.module('app')
         .factory('tCtrl', ['MainSettings', 'rest', 'lodash', tCtrl])
+        .factory('tOrderPos', tOrderPos)
 
         // Main REST factory
         .factory('rest',  ['$resource', 'MainSettings', function ($resource, MainSettings) {
@@ -107,6 +108,23 @@
         }
 
         return Ctrls;
+
+    }
+
+    // Table order position
+    function tOrderPos() {
+
+        var check = function(obj) {
+
+            if (obj.OrderByInfo.course == 'asc') {
+                return 'zmdi-caret-up';
+            } else {
+                return 'zmdi-caret-down';
+            }
+
+        };
+
+        return check;
 
     }
 

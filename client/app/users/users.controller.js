@@ -7,12 +7,9 @@
     'use strict';
 
     angular.module('app.users')
-        .controller('UsersCtrl', ['tCtrl', 'UserModel', UsersCtrl]);
+        .controller('UsersCtrl', ['tCtrl', 'UserModel', 'tOrderPos', UsersCtrl]);
 
-    function UsersCtrl(tCtrl, UserModel) {
-
-        var testUser = new UserModel(5, 'Sergey');
-        console.log(testUser);
+    function UsersCtrl(tCtrl, UserModel, tOrderPos) {
 
         var self = this;
 
@@ -46,6 +43,9 @@
             getUsers();
 
         }
+
+        // Check order type
+        self.checkOrder = tOrderPos;
 
 
         // Search

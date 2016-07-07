@@ -33,8 +33,7 @@
                                         ID
                                         <i ng-if="users.userCnfg.OrderByInfo.target == 'id'"
                                            class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : users.userCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : users.userCnfg.OrderByInfo.course == 'asc'}"></i>
+                                           ng-class="users.checkOrder(users.userCnfg)"></i>
                                     </span>
                                 </div>
                             </th>
@@ -44,8 +43,7 @@
                                         Компания
                                         <i ng-if="users.userCnfg.OrderByInfo.target == 'company'"
                                            class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : users.userCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : users.userCnfg.OrderByInfo.course == 'asc'}"></i>
+                                           ng-class="users.checkOrder(users.userCnfg)"></i>
                                     </span>
                                 </div>
                             </th>
@@ -55,8 +53,7 @@
                                         Категория
                                         <i ng-if="users.userCnfg.OrderByInfo.target == 'category'"
                                            class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : users.userCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : users.userCnfg.OrderByInfo.course == 'asc'}"></i>
+                                           ng-class="users.checkOrder(users.userCnfg)"></i>
                                     </span>
                                 </div>
                             </th>
@@ -66,8 +63,7 @@
                                         Контактное лицо
                                         <i ng-if="users.userCnfg.OrderByInfo.target == 'name'"
                                            class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : users.userCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : users.userCnfg.OrderByInfo.course == 'asc'}"></i>
+                                           ng-class="users.checkOrder(users.userCnfg)"></i>
                                     </span>
                                 </div>
                             </th>
@@ -77,8 +73,7 @@
                                         Телефон
                                         <i ng-if="users.userCnfg.OrderByInfo.target == 'phone'"
                                            class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : users.userCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : users.userCnfg.OrderByInfo.course == 'asc'}"></i>
+                                           ng-class="users.checkOrder(users.userCnfg)"></i>
                                     </span>
                                 </div>
                             </th>
@@ -88,8 +83,7 @@
                                         Email
                                         <i ng-if="users.userCnfg.OrderByInfo.target == 'email'"
                                            class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : users.userCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : users.userCnfg.OrderByInfo.course == 'asc'}"></i>
+                                           ng-class="users.checkOrder(users.userCnfg)"></i>
                                     </span>
                                 </div>
                             </th>
@@ -99,9 +93,13 @@
                                         Заключен договор?
                                         <i ng-if="users.userCnfg.OrderByInfo.target == 'roleId'"
                                            class="zmdi zmdi-caret-down"
-                                           ng-class="{'zmdi-caret-down' : users.userCnfg.OrderByInfo.course == 'desc',
-                                                      'zmdi-caret-up' : users.userCnfg.OrderByInfo.course == 'asc'}"></i>
+                                           ng-class="users.checkOrder(users.userCnfg)"></i>
                                     </span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Опции
                                 </div>
                             </th>
                         </tr>
@@ -124,14 +122,27 @@
                                         'c-regular-style': user.roleId == 'regular'
                                     }"></i>
                             </td>
+                            <td>
+                                <div class="btn-group" uib-dropdown is-open="status.isopen1">
+                                    <button ui-wave type="button"
+                                            class="btn btn-primary dropdown-toggle"
+                                            uib-dropdown-toggle> Опции <span
+                                        class="caret"></span></button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#/tenders/edit/{{tender.id}}">Редактировать</a></li>
+                                        <li class="divider"></li>
+                                        <li><span ng-click="tenders.showConfirm($event, tender.id, tender.title)">Удалить</span></li>
+                                    </ul>
+                                </div>
+                            </td>
                         </tr>
                         <tr ng-if="users.preloader">
-                            <td colspan="7">
+                            <td colspan="8">
                                 <div class="constell-loader cl-block"></div>
                             </td>
                         </tr>
                         <tr ng-if="users.list.Result.length == 0">
-                            <td colspan="7">
+                            <td colspan="8">
                                 Пользователей не найдено
                             </td>
                         </tr>
