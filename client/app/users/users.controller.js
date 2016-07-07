@@ -7,18 +7,15 @@
     'use strict';
 
     angular.module('app.users')
-        .controller('UsersCtrl', ['tCtrl', 'UserModel', 'tOrderPos', UsersCtrl]);
+        .controller('UsersCtrl', ['tCtrl', 'UserConf', 'tOrderPos', UsersCtrl])
+        .controller('UserEditCtrl', ['rest', 'tCtrl', 'UserModel', '$stateParams', UserEditCtrl]);
 
-    function UsersCtrl(tCtrl, UserModel, tOrderPos) {
+    // All users controller
+    function UsersCtrl(tCtrl, UserConf, tOrderPos) {
 
         var self = this;
 
-        self.userCnfg = {
-            customUrl: 'User/GetUsers',
-            Page: 1,
-            PerPage: 15,
-            SearchName: 'company'
-        };
+        self.userCnfg = new UserConf('User/GetUsers', 1, 15, 'company');
         self.preloader = true;
 
         // Get users
@@ -78,6 +75,36 @@
 
         // Init get users
         getUsers();
+
+    }
+
+    // User edit controller
+    function UserEditCtrl(rest, tCtrl, UserModel, $stateParams) {
+
+        var self = this;
+
+        // Get user info
+        var userData = rest.get({customUrl: 'User/GetUser', userId: $stateParams.userId});
+        userData.$promise.then(function (response) {
+
+            self.info = new UserModel(
+                response.id,
+                response.company,
+                response.name,
+                response.phone,
+                response.email,
+                response.categoryId
+            );
+
+
+        });
+
+        // Get categories
+        var categories = rest.get({customUrl: 'Tender/GetCategories'});
+        categories.$promise.then(function(response) {
+            self.categories = response.Result;
+        });
+
 
     }
 

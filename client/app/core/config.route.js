@@ -49,23 +49,23 @@
                         controller: 'UsersCtrl',
                         controllerAs: 'users'
                     })
-                    .state('userAbout', {
-                        url: '/users/:userId',
-                        templateUrl: '',
-                        controller: 'UserAboutCtrl',
-                        cotrollerAs: 'user'
-                    })
+                    //.state('userAbout', {
+                    //    url: '/users/:userId',
+                    //    templateUrl: '',
+                    //    controller: 'UserAboutCtrl',
+                    //    controllerAs: 'user'
+                    //})
                     .state('userEdit', {
                         url: '/users/edit/:userId',
-                        templateUrl: '',
+                        templateUrl: 'app/users/user.edit.html',
                         controller: 'UserEditCtrl',
-                        cotrollerAs: 'user'
+                        controllerAs: 'user'
                     })
                     .state('userAdd', {
                         url: '/users/add/',
                         templateUrl: '',
                         controller: 'UserAddCtrl',
-                        cotrollerAs: 'user'
+                        controllerAs: 'user'
                     });
 
 

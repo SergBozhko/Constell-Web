@@ -16,7 +16,8 @@
                 customUrl: '@customUrl',
                 tenderId: '@tenderId',
                 positionId: '@positionId',
-                categoryId: '@categoryId'
+                categoryId: '@categoryId',
+                userId: '@userId'
             }, {
                 'query':  {method:'GET', isArray: true},
                 'get':  {method:'GET', isArray: false}
